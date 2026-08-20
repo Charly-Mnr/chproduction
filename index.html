@@ -140,14 +140,15 @@
         }
 
         /* =========================================================
-           OPTIMISATION MOBILE EXTRÊME (GPU PUR - SANS CLIP-PATH)
+           OPTIMISATION MOBILE EXTRÊME (DURÉE DU SCROLL RALLONGÉE)
            ========================================================= */
         @media (max-width: 768px) {
             #camera-trigger {
-                height: 150vh !important;
+                height: 300dvh !important; /* Rallongé à 300dvh pour laisser le temps d'immerger avant d'afficher espace.jpg */
             }
 
             #camera-container {
+                height: 100dvh !important;
                 transform: translate3d(0,0,0);
                 -webkit-transform: translate3d(0,0,0);
                 backface-visibility: hidden;
@@ -164,6 +165,7 @@
 
             /* Remplacement du clip-path gourmand par un simple fondu d'opacité GPU */
             #hero-content-wrapper {
+                min-height: 100dvh !important;
                 clip-path: none !important;
                 -webkit-clip-path: none !important;
                 transform: translate3d(0,0,0);
@@ -576,8 +578,8 @@
 </section>
 
 <!-- ==========================================
-       SECTION QUI JE SUIS / À PROPOS
-       ========================================== -->
+   SECTION QUI JE SUIS / À PROPOS
+   ========================================== -->
 <section id="a-propos" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
 
     <!-- Éclairage d'ambiance en arrière-plan -->
@@ -622,8 +624,9 @@
                 <div class="space-y-4 text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
                     <p>
                         Ce qui me fait vibrer au quotidien, c'est de transformer une simple idée en image, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
-
-Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
+                    </p>
+                    <p>
+                        Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
                     </p>
                 </div>
 
@@ -661,9 +664,10 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
 
     </div>
 </section>
-    <!-- ==========================================
-       SECTION CONTACT & DEMANDE DE DEVIS
-       ========================================== -->
+
+<!-- ==========================================
+   SECTION CONTACT & DEMANDE DE DEVIS
+   ========================================== -->
 <section id="contact" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
 
     <div class="max-w-4xl mx-auto px-6 relative z-10">
@@ -683,7 +687,7 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
         </div>
 
         <!-- FORMULAIRE -->
-        <form action="#" method="POST" class="bg-neutral-950 border border-neutral-900 p-8 sm:p-12 rounded-2xl space-y-8 shadow-2xl">
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" action="#" method="POST" class="bg-neutral-950 border border-neutral-900 p-8 sm:p-12 rounded-2xl space-y-8 shadow-2xl">
             
             <!-- 1. TYPE DE PROJET -->
             <div class="space-y-3">
@@ -757,14 +761,19 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
                 </button>
             </div>
 
+            <!-- TOAST NOTIFICATION -->
+            <div id="toast" class="hidden text-center p-4 bg-brand-terracotta/20 border border-brand-terracotta text-white text-xs rounded-xl">
+                Votre message a été envoyé avec succès ! Je vous réponds sous 6h.
+            </div>
+
         </form>
 
     </div>
 </section>
 
-    <!-- ==========================================
-       FOOTER (NAVIGATION À GAUCHE & CONTACT À DROITE)
-       ========================================== -->
+<!-- ==========================================
+   FOOTER (NAVIGATION À GAUCHE & CONTACT À DROITE)
+   ========================================== -->
 <footer class="bg-brand-dark text-brand-light pt-20 pb-12 border-t border-brand-light/5 relative z-10">
     <div class="max-w-7xl mx-auto px-6">
         
@@ -772,25 +781,23 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
         <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-brand-light/5 items-center md:items-start">
             
             <!-- COLONNE 1 : NAVIGATION (À GAUCHE) -->
-<div class="md:col-span-4 space-y-4 text-center md:text-left order-2 md:order-1">
-    <span class="text-xs font-bold tracking-[0.2em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
-        Navigation
-    </span>
-    <ul class="space-y-2.5 text-xs text-brand-muted font-semibold">
-        <li><a href="#camera-trigger" class="hover:text-brand-terracotta transition-colors">Accueil</a></li>
-        <li><a href="#approche" class="hover:text-brand-terracotta transition-colors">Prestations sur-mesure</a></li>
-        <li><a href="#a-propos" class="hover:text-brand-terracotta transition-colors">Qui je suis</a></li>
-        <li><a href="#contact" class="hover:text-brand-terracotta transition-colors">Demander un devis</a></li>
-    </ul>
-</div>
+            <div class="md:col-span-4 space-y-4 text-center md:text-left order-2 md:order-1">
+                <span class="text-xs font-bold tracking-[0.2em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                    Navigation
+                </span>
+                <ul class="space-y-2.5 text-xs text-brand-muted font-semibold">
+                    <li><a href="#camera-trigger" class="hover:text-brand-terracotta transition-colors">Accueil</a></li>
+                    <li><a href="#approche" class="hover:text-brand-terracotta transition-colors">Prestations sur-mesure</a></li>
+                    <li><a href="#a-propos" class="hover:text-brand-terracotta transition-colors">Qui je suis</a></li>
+                    <li><a href="#contact" class="hover:text-brand-terracotta transition-colors">Demander un devis</a></li>
+                </ul>
+            </div>
 
-            <!-- COLONNE 2 : LOGO & PITCH (AU CENTRE - AGRANDI) -->
+            <!-- COLONNE 2 : LOGO & PITCH (AU CENTRE) -->
             <div class="md:col-span-4 flex flex-col items-center text-center space-y-4 order-1 md:order-2">
                 <a href="#" class="inline-block">
                     <img src="LOGO/3.png" onerror="handleMainLogoError(this)" alt="CH Production Logo" class="h-28 sm:h-36 md:h-40 w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-300">
                 </a>
-                <p class="text-[10px] text-brand-muted font-bold tracking-wide leading-relaxed max-w-xs uppercase">
-                </p>
             </div>
 
             <!-- COLONNE 3 : CONTACT (À DROITE) -->
@@ -816,17 +823,11 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
 
         </div>
 
-    </div>
-</footer>
-
         <!-- BLOC BAS : COPYRIGHT -->
         <div class="pt-8 flex items-center justify-center">
-            
-            <!-- Copyright -->
             <div class="text-[9px] text-brand-muted uppercase font-bold tracking-widest text-center">
                 &copy; 2026 CH Production. Tous droits réservés.
             </div>
-
         </div>
 
     </div>
@@ -843,7 +844,6 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
             const heroWrapper = document.getElementById('hero-content-wrapper');
 
             const mainHeader = document.getElementById('main-header');
-            const logoImg = mainHeader.querySelector('img');
             const introLogo = document.getElementById('intro-logo-container');
 
             if (!triggerSection || !lensGraphic || !heroWrapper) return;
@@ -912,8 +912,8 @@ Du premier repérage au calage de la lumière, je façonne chaque projet avec so
                 mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
             }
 
-            // Masquage complet de l'objectif en fin de défilement pour libérer l'accès aux boutons du Hero
-            if (progress >= 0.80) {
+            // Masquage complet de l'objectif en fin de défilement (ajusté pour le scroll mobile à 300dvh)
+            if (progress >= 0.85) {
                 cameraContainer.style.opacity = '0';
                 cameraContainer.style.visibility = 'hidden';
                 cameraContainer.style.pointerEvents = 'none';
