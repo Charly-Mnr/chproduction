@@ -834,122 +834,118 @@
 </footer>
 
    <!-- ==========================================
-   JAVASCRIPT DYNAMICS (IMMERSIVE MASK ENGINE)
-   ========================================== -->
-<script>
-    window.addEventListener('scroll', function() {
-        const triggerSection = document.getElementById('camera-trigger');
-        const cameraContainer = document.getElementById('camera-container');
-        const lensGraphic = document.querySelector('.camera-lens-graphic');
-        const heroWrapper = document.getElementById('hero-content-wrapper');
+       JAVASCRIPT DYNAMICS (IMMERSIVE MASK ENGINE)
+       ========================================== -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const triggerSection = document.getElementById('camera-trigger');
+            const cameraContainer = document.getElementById('camera-container');
+            const lensGraphic = document.querySelector('.camera-lens-graphic');
+            const heroWrapper = document.getElementById('hero-content-wrapper');
 
-        const mainHeader = document.getElementById('main-header');
-        const introLogo = document.getElementById('intro-logo-container');
-        const scrollHint = document.getElementById('scroll-hint');
+            const mainHeader = document.getElementById('main-header');
+            const introLogo = document.getElementById('intro-logo-container');
 
-        if (!triggerSection || !lensGraphic || !heroWrapper) return;
+            if (!triggerSection || !lensGraphic || !heroWrapper) return;
 
-        const rect = triggerSection.getBoundingClientRect();
-        const sectionHeight = triggerSection.offsetHeight;
-        
-        const scrollDistance = -rect.top;
-        const totalScrollable = sectionHeight - window.innerHeight;
-        let progress = scrollDistance / totalScrollable;
-        
-        if (progress < 0) progress = 0;
-        if (progress > 1) progress = 1;
+            const rect = triggerSection.getBoundingClientRect();
+            const sectionHeight = triggerSection.offsetHeight;
+            
+            const scrollDistance = -rect.top;
+            const totalScrollable = sectionHeight - window.innerHeight;
+            let progress = scrollDistance / totalScrollable;
+            
+            if (progress < 0) progress = 0;
+            if (progress > 1) progress = 1;
 
-        // 1. DISPARITION IMMÉDIATE DU TEXTE "SCROLLEZ..." ET DU LOGO D'INTRO
-        if (scrollDistance > 10) {
-            if (scrollHint) scrollHint.style.opacity = '0';
-            if (introLogo) {
-                const logoFade = Math.max(0, 1 - (progress / 0.1));
-                introLogo.style.opacity = logoFade.toString();
+            // Courbe d'asservissement lissée (puissance 2.8) pour la transition
+            const easeProgress = Math.pow(progress, 2.8);
+
+            // Zoom progressif et enveloppant de l'objectif
+            const targetScale = 1 + (easeProgress * 55); 
+            lensGraphic.style.transform = `scale(${targetScale})`;
+
+            // Masque d'immersion circulaire synchronisé
+            const circleRadius = easeProgress * 180; 
+            heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
+
+            // Gestion de l'opacité et de la transition du fond d'écran
+            if (progress > 0.03) {
+                const alphaProgress = (progress - 0.03) / 0.97;
+                lensGraphic.style.opacity = Math.max(0, 1 - (Math.pow(alphaProgress, 2) * 1.5));
+                heroWrapper.style.opacity = Math.min(1, alphaProgress * 3);
+                
+                if (progress > 0.55) {
+                    triggerSection.style.backgroundColor = '#FAF6F0';
+                } else {
+                    triggerSection.style.backgroundColor = '#0B0807';
+                }
+            } else {
+                lensGraphic.style.opacity = 1;
+                heroWrapper.style.opacity = 0;
+                triggerSection.style.backgroundColor = '#0B0807';
             }
-        } else {
-            if (scrollHint) scrollHint.style.opacity = '1';
-            if (introLogo) introLogo.style.opacity = '1';
-        }
 
-        // 2. SYNCHRONISATION DU ZOOM ET DU MASQUE DE DÉCOUPE
-        // Courbe fluide partagée entre PC et mobile
-        const easeProgress = Math.pow(progress, 1.4);
+            // Disparition graduelle du logo d'intro (3.png) en haut à gauche
+            if (progress > 0.01) {
+                const fadeFactor = Math.max(0, 1 - (progress / 0.15));
+                introLogo.style.opacity = fadeFactor;
+                introLogo.style.transform = `translateY(-${progress * 60}px)`;
+                
+                if (fadeFactor <= 0) {
+                    introLogo.style.display = 'none';
+                } else {
+                    introLogo.style.display = 'block';
+                }
+            } else {
+                introLogo.style.opacity = '1';
+                introLogo.style.transform = 'translateY(0)';
+                introLogo.style.display = 'block';
+            }
 
-        // Zoom de l'objectif (l'objectif grossit vers l'extérieur)
-        const targetScale = 1 + (easeProgress * 45); 
-        lensGraphic.style.transform = `scale(${targetScale})`;
-
-        // Masque circulaire (le trou s'ouvre depuis le centre exact)
-        const circleRadius = easeProgress * 140; 
-        heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
-
-        // 3. APPARITION DE L'IMAGE "ESPACE" ET DU TEXTE AU CENTRE
-        // Rend l'image visible immédiatement : c'est le clipPath qui gère ce qui est vu au centre
-        if (progress > 0.01) {
-            heroWrapper.style.opacity = '1';
-            heroWrapper.style.visibility = 'visible';
-        } else {
-            heroWrapper.style.opacity = '0';
-        }
-
-        // Disparition de la lentille métallique une fois qu'elle a dépassé l'écran
-        if (progress > 0.60) {
-            const lensOpacity = Math.max(0, 1 - ((progress - 0.60) / 0.25));
-            lensGraphic.style.opacity = lensOpacity.toString();
-        } else {
-            lensGraphic.style.opacity = '1';
-        }
-
-        // 4. TRANSITION DU FOND DE LA SECTION
-        if (progress > 0.55) {
-            triggerSection.style.backgroundColor = '#FAF6F0';
-        } else {
-            triggerSection.style.backgroundColor = '#0B0807';
-        }
-
-        // 5. RÉVÉLATION DU HEADER PRINCIPAL
-        if (progress >= 0.70) {
-            if (mainHeader) {
+            // Révélation dynamique du Header principal (avec le logo 6.png)
+            if (progress >= 0.70) {
                 mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
                 mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
-            }
-        } else {
-            if (mainHeader) {
+            } else {
                 mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
                 mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
             }
+
+            // Masquage complet de l'objectif en fin de défilement (ajusté pour le scroll mobile à 300dvh)
+            if (progress >= 0.85) {
+                cameraContainer.style.opacity = '0';
+                cameraContainer.style.visibility = 'hidden';
+                cameraContainer.style.pointerEvents = 'none';
+                cameraContainer.style.display = 'none';
+            } else {
+                cameraContainer.style.opacity = '1';
+                cameraContainer.style.visibility = 'visible';
+                cameraContainer.style.pointerEvents = 'auto';
+                cameraContainer.style.display = 'flex';
+            }
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = 'fa-solid fa-xmark text-xl';
+            } else {
+                menu.classList.add('hidden');
+                icon.className = 'fa-solid fa-bars text-xl';
+            }
         }
 
-        // 6. MASQUAGE DE LA STRUCTURE CAMÉRA EN FIN DE TRANSITION
-        if (progress >= 0.85) {
-            cameraContainer.style.opacity = '0';
-            cameraContainer.style.pointerEvents = 'none';
-        } else {
-            cameraContainer.style.opacity = '1';
-            cameraContainer.style.pointerEvents = 'auto';
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contact-form');
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            form.reset();
+            setTimeout(() => { toast.classList.add('hidden'); }, 6000);
         }
-    });
-
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        const icon = document.getElementById('menu-icon');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-            icon.className = 'fa-solid fa-xmark text-xl';
-        } else {
-            menu.classList.add('hidden');
-            icon.className = 'fa-solid fa-bars text-xl';
-        }
-    }
-
-    function handleContactSubmit(event) {
-        event.preventDefault();
-        const form = document.getElementById('contact-form');
-        const toast = document.getElementById('toast');
-        toast.classList.remove('hidden');
-        form.reset();
-        setTimeout(() => { toast.classList.add('hidden'); }, 6000);
-    }
-</script>
+    </script>
 </body>
 </html>
