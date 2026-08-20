@@ -264,7 +264,7 @@
             
             <!-- Indication visuelle de scroll sous l'objectif (Optimisé mobile) -->
             <div class="focus-text-wrapper absolute -bottom-10 sm:-bottom-16 flex flex-col items-center justify-center space-y-1.5 pointer-events-none z-50">
-                <span class="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-sand/80 uppercase">
+                <span id="scroll-hint" class="text-xs uppercase tracking-widest text-neutral-400 transition-opacity duration-150">
                     Scrollez pour ajuster la mise au point
                 </span>
                 <i class="fa-solid fa-chevron-down text-brand-terracotta text-xs sm:text-sm animate-bounce mobile-no-bounce"></i>
@@ -845,14 +845,14 @@
 
         const mainHeader = document.getElementById('main-header');
         const introLogo = document.getElementById('intro-logo-container');
-        // Ciblage de l'indication de scroll (si emballée dans un span/div ou sous-titre)
-        const scrollHint = document.querySelector('#camera-container p, #camera-container .scroll-text');
+        const scrollHint = document.getElementById('scroll-hint'); // Ciblage exact par ID
 
         if (!triggerSection || !lensGraphic || !heroWrapper) return;
 
         const rect = triggerSection.getBoundingClientRect();
         const sectionHeight = triggerSection.offsetHeight;
         
+        // Calcul du scroll relatif à la section
         const scrollDistance = -rect.top;
         const totalScrollable = sectionHeight - window.innerHeight;
         let progress = scrollDistance / totalScrollable;
@@ -860,51 +860,53 @@
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
-        // Progression très réactive au doigt (puissance 1.2)
-        const easeProgress = Math.pow(progress, 1.2);
+        // 1. DISPARITION IMMÉDIATE DE "SCROLLEZ..." ET DU LOGO D'INTRO
+        // Dès que l'utilisateur scrolle de plus de 5px, le texte s'efface
+        if (scrollDistance > 5) {
+            if (scrollHint) {
+                scrollHint.style.opacity = '0';
+                scrollHint.style.pointerEvents = 'none';
+            }
+            if (introLogo) {
+                const logoFade = Math.max(0, 1 - (progress / 0.1));
+                introLogo.style.opacity = logoFade.toString();
+            }
+        } else {
+            if (scrollHint) scrollHint.style.opacity = '1';
+            if (introLogo) introLogo.style.opacity = '1';
+        }
 
-        // Zoom de l'objectif
-        const targetScale = 1 + (easeProgress * 40); 
+        // 2. ZOOM DE L'OBJECTIF (Réactif dès le début sur mobile)
+        const easeProgress = Math.pow(progress, 1.1); // Courbe quasi linéaire pour une réactivité maximale
+        const targetScale = 1 + (easeProgress * 35); 
         lensGraphic.style.transform = `scale(${targetScale})`;
 
         // Masque circulaire
-        const circleRadius = easeProgress * 150; 
+        const circleRadius = easeProgress * 140; 
         heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
 
-        // 1. Gestion de l'image & texte "Immortalisez votre excellence"
-        // Reste TOUT À FAIT INVISIBLE (opacité 0) durant les 8 premiers % de scroll
-        if (progress > 0.08) {
-            // Monte en opacité progressivement pendant que l'objectif s'ouvre
-            const heroOpacity = Math.min(1, (progress - 0.08) / 0.35);
-            heroWrapper.style.opacity = heroOpacity;
+        // 3. APPARITION DE "IMMORTALISEZ VOTRE EXCELLENCE" (ESPACE.JPG)
+        // Reste totalement invisible (0) durant les 15% premiers du scroll
+        if (progress > 0.15) {
+            const heroOpacity = Math.min(1, (progress - 0.15) / 0.30);
+            heroWrapper.style.opacity = heroOpacity.toString();
 
-            // Disparition progressive du corps de l'objectif
-            const lensOpacity = Math.max(0, 1 - ((progress - 0.1) / 0.4));
-            lensGraphic.style.opacity = lensOpacity;
+            const lensOpacity = Math.max(0, 1 - ((progress - 0.20) / 0.35));
+            lensGraphic.style.opacity = lensOpacity.toString();
         } else {
-            heroWrapper.style.opacity = 0;
-            lensGraphic.style.opacity = 1;
+            heroWrapper.style.opacity = '0';
+            lensGraphic.style.opacity = '1';
         }
 
-        // 2. Disparition immédiate de "Scrollez..." et du logo d'intro dès le début du geste
-        if (progress > 0.02) {
-            const fadeOut = Math.max(0, 1 - (progress / 0.08));
-            if (introLogo) introLogo.style.opacity = fadeOut;
-            if (scrollHint) scrollHint.style.opacity = fadeOut;
-        } else {
-            if (introLogo) introLogo.style.opacity = 1;
-            if (scrollHint) scrollHint.style.opacity = 1;
-        }
-
-        // 3. Changement de fond
+        // 4. CHANGEMENT DE FOND DE LA SECTION
         if (progress > 0.50) {
             triggerSection.style.backgroundColor = '#FAF6F0';
         } else {
             triggerSection.style.backgroundColor = '#0B0807';
         }
 
-        // 4. Apparition du Header principal
-        if (progress >= 0.60) {
+        // 5. REVELATION DU HEADER PRINCIPAL
+        if (progress >= 0.55) {
             mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
             mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
         } else {
@@ -912,8 +914,8 @@
             mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
         }
 
-        // 5. Masquage final de la caméra
-        if (progress >= 0.75) {
+        // 6. MASQUAGE DE LA CAMÉRA EN FIN DE COURSE
+        if (progress >= 0.70) {
             cameraContainer.style.opacity = '0';
             cameraContainer.style.visibility = 'hidden';
             cameraContainer.style.pointerEvents = 'none';
