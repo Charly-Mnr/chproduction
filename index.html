@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CH Production | Vidéaste Professionnel & Créateur de Contenu</title>
+
+    <!-- FAVICON (Icône d'onglet & raccourcis mobiles) -->
+    <link rel="icon" type="image/png" href="LOGO/5.png">
+    <link rel="apple-touch-icon" href="LOGO/5.png">
+
+    <!-- SCRIPT DE DÉTECTION IMMÉDIATE (Évite le flash de l'objectif) -->
+    <script>
+        if (window.location.hash === '#hero-content-wrapper') {
+            document.documentElement.classList.add('skip-intro');
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#2C1E1A',
+                            light: '#FAF6F0',
+                            terracotta: '#8C533C',
+                            sand: '#F3EFE9',
+                            textDark: '#4A3E3B',
+                            muted: '#8C7B76'
+                        }
+                    },
+                    fontFamily: {
+                        hanken: ['Hanken Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Paper texture overlay */
+        .paper-texture {
+            position: relative;
+        }
+        .paper-texture::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.025;
+            pointer-events: none;
+            background-image: radial-gradient(#2c1e1a 1px, transparent 0), radial-gradient(#2c1e1a 1px, transparent 0);
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
+            z-index: 1;
+        }
+        .asymmetric-border {
+            border-radius: 40px 12px 40px 12px;
+        }
+
+        /* Camera Scroll Animation Styles */
+        #camera-trigger {
+            height: 230vh;
+            background-color: #0B0807;
+            transition: background-color 0.3s ease-out;
+        }
+        #camera-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: 40;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: transparent;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        .camera-lens-graphic {
+            transform: scale(1);
+            will-change: transform, opacity;
+            transform-origin: center center;
+            width: 800px;
+            height: 800px;
+            max-width: 90vw;
+            max-height: 90vw;
+            object-fit: contain;
+            z-index: 42;
+        }
+        
+        #hero-content-wrapper {
+            opacity: 0;
+            will-change: clip-path, opacity;
+            clip-path: circle(0% at 50% 50%);
+            background-color: #000000;
+            width: 100%;
+        }
+
+        #intro-logo-container {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 48; 
+            pointer-events: none;
+            width: 220px; 
+            max-width: 45vw;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        /* =========================================================
+           RÈGLES EN CAS DE RETOUR DU PORTFOLIO (BYPASS DE L'INTRO)
+           ========================================================= */
+        html.skip-intro #camera-trigger {
+            height: auto !important;
+        }
+        html.skip-intro #camera-container,
+        html.skip-intro #intro-logo-container {
+            display: none !important;
+        }
+        html.skip-intro #hero-content-wrapper {
+            opacity: 1 !important;
+            clip-path: none !important;
+            position: relative !important;
+        }
+        html.skip-intro #main-header {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(8px) !important;
+        }
+
+        /* =========================================================
+           OPTIMISATION MOBILE EXTRÊME (GPU PUR - SANS CLIP-PATH)
+           ========================================================= */
+        @media (max-width: 768px) {
+            #camera-trigger {
+                height: 150vh !important;
+            }
+
+            #camera-container {
+                transform: translate3d(0,0,0);
+                -webkit-transform: translate3d(0,0,0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .camera-lens-graphic {
+                width: 280px !important;
+                height: 280px !important;
+                filter: none !important;
+                -webkit-filter: none !important;
+                drop-shadow: none !important;
+            }
+
+            /* Remplacement du clip-path gourmand par un simple fondu d'opacité GPU */
+            #hero-content-wrapper {
+                clip-path: none !important;
+                -webkit-clip-path: none !important;
+                transform: translate3d(0,0,0);
+                -webkit-transform: translate3d(0,0,0);
+            }
+        }
+    </style>
+    <script>
+        function handleImgError(img, fallbackIcon, label) {
+            const parent = img.parentNode;
+            const container = document.createElement('div');
+            container.className = "w-[400px] h-[400px] bg-brand-dark/80 backdrop-blur-md flex flex-col items-center justify-center text-brand-muted p-6 text-center border border-dashed border-brand-light/20 rounded-full";
+            const currentSrc = img.getAttribute('src') || 'votre image';
+            container.innerHTML = `
+                <div class="w-12 h-12 rounded-full bg-brand-terracotta/20 text-brand-terracotta flex items-center justify-center mb-3">
+                    <i class="fa-solid ${fallbackIcon} text-lg"></i>
+                </div>
+                <span class="text-xs font-bold text-white uppercase tracking-wider block mb-1">${label}</span>
+                <span class="text-[10px] text-brand-muted block">Placez "${currentSrc}" dans le même dossier</span>
+            `;
+            parent.replaceChild(container, img);
+        }
+
+        function handleMainLogoError(img) {
+            const parent = img.parentNode;
+            const logoText = document.createElement('span');
+            logoText.className = "font-extrabold text-xl text-white tracking-tighter hover:text-brand-terracotta transition duration-200 uppercase";
+            logoText.innerText = "CH Production";
+            parent.replaceChild(logoText, img);
+        }
+
+        function scrollToFocus() {
+            const trigger = document.getElementById('camera-trigger');
+            if (trigger) {
+                window.scrollTo({
+                    top: trigger.offsetTop + (trigger.offsetHeight * 0.6),
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</head>
+<body class="bg-black font-hanken text-brand-textDark paper-texture selection:bg-brand-terracotta selection:text-white">
+
+    <!-- ==========================================
+       LOGO D'INTRO EN HAUT À GAUCHE (S'estompe au scroll initial)
+       ========================================== -->
+    <div id="intro-logo-container">
+        <img src="LOGO/3.png" onerror="this.style.display='none'" alt="CH Production" class="w-full h-auto object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
+    </div>
+
+    <!-- ==========================================
+       HEADER & NAVIGATION (Prend le relais après l’immersion)
+       ========================================== -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-transparent opacity-0 pointer-events-none border-b border-transparent transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center group">
+                <!-- Logo principal (Taille agrandie) -->
+                <img src="IMAGE/6.png" onerror="handleMainLogoError(this)" alt="CH Production" class="h-10 w-auto object-contain transition duration-200">
+            </a>
+
+            <!-- Menu de navigation ordinateur -->
+            <nav id="main-navigation" class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase transition-all duration-500">
+                <a href="#projets" class="text-white hover:text-brand-terracotta transition">Créations</a>
+                <a href="#approche" class="text-white hover:text-brand-terracotta transition">Mon Approche</a>
+                <a href="#a-propos" class="text-white hover:text-brand-terracotta transition">À Propos</a>
+                <a href="#contact" class="bg-brand-dark text-brand-light px-5 py-2.5 rounded-full hover:bg-brand-terracotta transition shadow-sm">Me Contacter</a>
+            </nav>
+
+            <!-- Bouton burger mobile -->
+            <button id="mobile-navigation-btn" onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-brand-terracotta focus:outline-none transition-all duration-500">
+                <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Menu de navigation mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black border-b border-brand-dark/10 px-6 py-6 absolute w-full left-0 z-40 transition-all">
+            <nav class="flex flex-col gap-4 text-xs font-bold tracking-widest uppercase">
+                <a href="#projets" onclick="toggleMobileMenu()" class="text-white py-2">Créations</a>
+                <a href="#approche" onclick="toggleMobileMenu()" class="text-white py-2">Mon Approche</a>
+                <a href="#a-propos" onclick="toggleMobileMenu()" class="text-white py-2">À Propos</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="bg-brand-dark text-brand-light px-5 py-3 rounded-full text-center hover:bg-brand-terracotta transition mt-2">Me Contacter</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ==========================================
+       HERO & ZOOM LENS TRACK CONTAINER
+       ========================================== -->
+<div id="camera-trigger" class="relative">
+
+    <!-- Animated Camera Lens Overlay & Scroll Indicator -->
+    <div id="camera-container" class="cursor-pointer group" onclick="scrollToFocus()">
+        <div class="relative flex flex-col items-center justify-center">
+            <img src="IMAGE/1.png" onerror="handleImgError(this, 'fa-camera', 'Objectif Photo')" alt="Objectif" class="camera-lens-graphic drop-shadow-2xl md:group-hover:scale-[1.02] transition-transform duration-300">
+            
+            <!-- Indication visuelle de scroll sous l'objectif (Optimisé mobile) -->
+            <div class="focus-text-wrapper absolute -bottom-10 sm:-bottom-16 flex flex-col items-center justify-center space-y-1.5 pointer-events-none z-50">
+                <span class="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-sand/80 uppercase">
+                    Scrollez pour ajuster la mise au point
+                </span>
+                <i class="fa-solid fa-chevron-down text-brand-terracotta text-xs sm:text-sm animate-bounce mobile-no-bounce"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Content Section -->
+    <section id="hero-content-wrapper" class="sticky top-0 min-h-screen flex items-center justify-center relative overflow-hidden w-full bg-black">
+        
+        <!-- Image de fond (espace.jpg) -->
+        <div class="absolute inset-0 z-0">
+            <img src="IMAGE/espace.jpg" onerror="this.style.display='none'" alt="Espace Galaxie" class="w-full h-full object-cover opacity-100">
+            <!-- Voile sombre à 30% -->
+            <div class="absolute inset-0 bg-black/30"></div>
+        </div>
+
+        <!-- BLOC CENTRÉ : Titre + Boutons d'action -->
+        <div class="max-w-5xl mx-auto px-6 w-full relative z-10 text-center flex flex-col justify-center items-center min-h-screen pt-12 pb-36 sm:pb-44">
+            
+            <!-- Titre principal -->
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl text-white font-extrabold leading-none tracking-tight w-full mb-8 sm:mb-10" style="font-family: 'Montserrat', serif; text-transform: none;">
+                Immortalisez votre
+                <span class="inline-block align-baseline font-bold" style="font-family: 'Cinzel', serif; text-transform: none; color: #7D063; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.8);">
+                    excellence.
+                </span>
+            </h1>
+            
+            <!-- Boutons d'action -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#contact" class="bg-brand-terracotta text-white font-bold text-xs tracking-wider uppercase text-center px-8 py-4 rounded-full hover:bg-white hover:text-black transition shadow-lg duration-200">
+                    Discuter de votre projet
+                </a>
+            </div>
+
+        </div>
+
+        <!-- BANDEAU LOGOS CLIENTS (VERROUILLÉ TOUT EN BAS DE ESPACE.JPG) -->
+        <div class="absolute bottom-0 left-0 w-full z-20 px-2 pb-0">
+            
+            <!-- Conteneur verrouillé sur 1 seule ligne (flex-nowrap) avec grande taille -->
+            <div class="flex flex-nowrap items-center justify-between sm:justify-center gap-3 sm:gap-8 md:gap-12 w-full max-w-7xl mx-auto">
+                
+                <!-- Logo 1: AMG -->
+                <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
+                    <img src="LOGO/LOGO_AMG.png" onerror="this.style.display='none'" alt="AMG" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                </div>
+
+                <!-- Logo 2: ELIXIR -->
+                <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
+                    <img src="LOGO/LOGO_ELIXIR.png" onerror="this.style.display='none'" alt="Elixir" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                </div>
+
+                <!-- Logo 3: BIOGEMM -->
+                <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
+                    <img src="LOGO/LOGO_BIOGEMM.png" onerror="this.style.display='none'" alt="Biogemm" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                </div>
+
+                <!-- Logo 4: RXP -->
+                <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
+                    <img src="LOGO/LOGO_RXP.png" onerror="this.style.display='none'" alt="RXP" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+   <!-- ==========================================
+       DERNIERS PROJETS (VITRINE VIDÉO & LINK PORTFOLIO)
+       ========================================== -->
+<section id="projets" class="w-full block clear-both bg-black text-white" style="font-family: 'Montserrat', sans-serif;">
+
+    <!-- BANNIÈRE VIDÉO IMMERSIVE -->
+    <div class="relative w-full min-h-screen flex items-center overflow-hidden">
+        
+        <!-- Vidéo Jet Ski en arrière-plan -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <video 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                poster="MINIATURE/couv_rxp.jpg" 
+                class="w-full h-full object-cover opacity-85 scale-105">
+                <source src="https://res.cloudinary.com/cjaqyint/video/upload/v1787228785/RXPVF_16_9_2.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Bandeau de fondu supérieur (Noir vers Transparent) -->
+            <div class="absolute top-0 inset-x-0 h-40 md:h-64 bg-gradient-to-b from-black via-black/70 to-transparent z-10 pointer-events-none"></div>
+
+            <!-- Gradient sombre latéral (pour faire ressortir le titre et le bouton) -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+        </div>
+
+        <!-- Contenu aligné à gauche et centré verticalement -->
+        <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
+            <div class="max-w-xl space-y-8">
+                <div>
+                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block mb-4" style="font-family: 'Cinzel', serif;">
+                        Portfolio & Réalisations
+                    </span>
+                    <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl leading-none">
+                        Les dernières créations
+                    </h2>
+                </div>
+
+                <!-- BOUTON / LIEN : VOIR LE PORTFOLIO -->
+                <div>
+                    <a href="portfolio.html" class="inline-flex items-center gap-4 group bg-black/40 backdrop-blur-md border border-white/20 hover:border-brand-terracotta px-8 py-4 transition-all duration-500 shadow-2xl hover:bg-brand-terracotta/10">
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:text-brand-terracotta transition-colors duration-300" style="font-family: 'Cinzel', serif;">
+                            Voir le portfolio
+                        </span>
+                        <svg class="w-4 h-4 text-brand-terracotta transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+       SECTION MON APPROCHE & SUR-MESURE
+       ========================================== -->
+<section id="approche" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
+
+    <!-- Éclairage d'ambiance en arrière-plan -->
+    <div class="absolute top-1/3 -left-48 w-96 h-96 bg-brand-terracotta/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            <!-- COLONNE GAUCHE : Vision Éditoriale & CTA Sticky -->
+            <div class="lg:col-span-5 lg:sticky lg:top-28 space-y-8">
+                
+                <div class="space-y-3">
+                    <span class="text-[11px] font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                        Méthodologie & Exigence
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
+                        Une Approche 100% Sur-Mesure
+                    </h2>
+                </div>
+
+                <div class="w-12 h-[1px] bg-brand-terracotta/60"></div>
+
+                <p class="text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
+                    Il n'existe pas de formule standardisée. Je pense, j'écris et je produis chaque réalisation spécifiquement selon vos objectifs, vos contraintes de terrain et votre identité visuelle.
+                </p>
+
+                <!-- Micro-Garanties Premium -->
+                <div class="pt-2 space-y-3 border-t border-neutral-900">
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-brand-terracotta shadow-[0_0_6px_#E07A5F]"></div>
+                        <span class="text-[11px] tracking-wider text-neutral-300 uppercase font-medium">Scénarisation & Storytelling</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-brand-terracotta shadow-[0_0_6px_#E07A5F]"></div>
+                        <span class="text-[11px] tracking-wider text-neutral-300 uppercase font-medium">Captation cinéma 4K</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-brand-terracotta shadow-[0_0_6px_#E07A5F]"></div>
+                        <span class="text-[11px] tracking-wider text-neutral-300 uppercase font-medium">Étalonnage & Sound Design</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-brand-terracotta shadow-[0_0_6px_#E07A5F]"></div>
+                        <span class="text-[11px] tracking-wider text-neutral-300 uppercase font-medium">Devis personnalisé sous 6h</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLONNE DROITE : Processus Chronologique 4 Étapes -->
+            <div class="lg:col-span-7 relative space-y-6">
+                
+                <!-- Fil Conducteur Lumineux -->
+                <div class="absolute left-5 md:left-6 top-6 bottom-6 w-[1px] bg-gradient-to-b from-brand-terracotta via-brand-terracotta/40 to-transparent z-0"></div>
+
+                <!-- ÉTAPE 01 -->
+                <div class="relative z-10 pl-12 md:pl-16 group">
+                    <div class="absolute left-0 top-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black border border-neutral-800 group-hover:border-brand-terracotta flex items-center justify-center transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(224,122,95,0.2)]">
+                        <span class="text-xs md:text-sm text-neutral-400 group-hover:text-brand-terracotta font-semibold transition-colors">01</span>
+                    </div>
+
+                    <div class="bg-neutral-950/60 backdrop-blur-md border border-neutral-900 group-hover:border-brand-terracotta/30 p-6 transition-all duration-300 rounded-xl relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-brand-terracotta uppercase" style="font-family: 'Cinzel', serif;">
+                                Phase I — Conception
+                            </span>
+                            <span class="text-[9px] font-semibold text-neutral-500 uppercase tracking-wider">Immersion & Storytelling</span>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-brand-terracotta transition-colors tracking-tight">
+                            Briefing
+                        </h3>
+
+                        <p class="text-xs text-neutral-400 leading-relaxed font-light mb-4">
+                            Je m'immerge totalement dans l'ADN de votre marque. Ensemble, nous définissons vos objectifs pour que je puisse façonner le message clé, le ton juste et bâtir un axe narratif fort.
+                        </p>
+
+                        <div class="pt-3 border-t border-neutral-900 flex flex-wrap gap-2 text-[10px] text-neutral-500 font-medium">
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Analyse du besoin</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Moodboard Visuel</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Script & Storyboard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÉTAPE 02 -->
+                <div class="relative z-10 pl-12 md:pl-16 group">
+                    <div class="absolute left-0 top-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black border border-neutral-800 group-hover:border-brand-terracotta flex items-center justify-center transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(224,122,95,0.2)]">
+                        <span class="text-xs md:text-sm text-neutral-400 group-hover:text-brand-terracotta font-semibold transition-colors">02</span>
+                    </div>
+
+                    <div class="bg-neutral-950/60 backdrop-blur-md border border-neutral-900 group-hover:border-brand-terracotta/30 p-6 transition-all duration-300 rounded-xl relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-brand-terracotta uppercase" style="font-family: 'Cinzel', serif;">
+                                Phase II — Préparation
+                            </span>
+                            <span class="text-[9px] font-semibold text-neutral-500 uppercase tracking-wider">Logistique & Repérage</span>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-brand-terracotta transition-colors tracking-tight">
+                            Pré-Production
+                        </h3>
+
+                        <p class="text-xs text-neutral-400 leading-relaxed font-light mb-4">
+                            Je planifie chaque étape pour vous garantir un tournage fluide : repérage du terrain, étude de la lumière, découpage technique et calendrier d'intervention.
+                        </p>
+
+                        <div class="pt-3 border-t border-neutral-900 flex flex-wrap gap-2 text-[10px] text-neutral-500 font-medium">
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Repérage Lumière</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Planning de Tournage</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Feuille de Route</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÉTAPE 03 -->
+                <div class="relative z-10 pl-12 md:pl-16 group">
+                    <div class="absolute left-0 top-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black border border-neutral-800 group-hover:border-brand-terracotta flex items-center justify-center transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(224,122,95,0.2)]">
+                        <span class="text-xs md:text-sm text-neutral-400 group-hover:text-brand-terracotta font-semibold transition-colors">03</span>
+                    </div>
+
+                    <div class="bg-neutral-950/60 backdrop-blur-md border border-neutral-900 group-hover:border-brand-terracotta/30 p-6 transition-all duration-300 rounded-xl relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-brand-terracotta uppercase" style="font-family: 'Cinzel', serif;">
+                                Phase III — Production
+                            </span>
+                            <span class="text-[9px] font-semibold text-neutral-500 uppercase tracking-wider">Tournage & Captation</span>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-brand-terracotta transition-colors tracking-tight">
+                            Tournage
+                        </h3>
+
+                        <p class="text-xs text-neutral-400 leading-relaxed font-light mb-4">
+                            Je veille à chaque cadrage, au travail de la lumière naturelle et à une direction discrète sur le terrain. Je capte chaque séquence en 4K.
+                        </p>
+
+                        <div class="pt-3 border-t border-neutral-900 flex flex-wrap gap-2 text-[10px] text-neutral-500 font-medium">
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Captation 4K HDR</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Optiques f/2.8</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Stabilisation Gimbal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÉTAPE 04 -->
+                <div class="relative z-10 pl-12 md:pl-16 group">
+                    <div class="absolute left-0 top-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black border border-neutral-800 group-hover:border-brand-terracotta flex items-center justify-center transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(224,122,95,0.2)]">
+                        <span class="text-xs md:text-sm text-neutral-400 group-hover:text-brand-terracotta font-semibold transition-colors">04</span>
+                    </div>
+
+                    <div class="bg-neutral-950/60 backdrop-blur-md border border-neutral-900 group-hover:border-brand-terracotta/30 p-6 transition-all duration-300 rounded-xl relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-brand-terracotta uppercase" style="font-family: 'Cinzel', serif;">
+                                Phase IV — Finition
+                            </span>
+                            <span class="text-[9px] font-semibold text-neutral-500 uppercase tracking-wider">Post-Production</span>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-brand-terracotta transition-colors tracking-tight">
+                            Post-Production
+                        </h3>
+
+                        <p class="text-xs text-neutral-400 leading-relaxed font-light mb-4">
+                            Je prends en charge toute la post-production — du montage au mixage son, jusqu'à l'étalonnage cinématographique sur DaVinci — et je vous livre les fichiers adaptés à tous vos écrans (9:16, 16:9).
+                        </p>
+
+                        <div class="pt-3 border-t border-neutral-900 flex flex-wrap gap-2 text-[10px] text-neutral-500 font-medium">
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Étalonnage DaVinci</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Sound Design Immersif</span>
+                            <span class="bg-neutral-900 px-2.5 py-1 rounded text-neutral-400">Déclinaisons RS (Reels/TikTok)</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- ==========================================
+       SECTION QUI JE SUIS / À PROPOS
+       ========================================== -->
+<section id="a-propos" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
+
+    <!-- Éclairage d'ambiance en arrière-plan -->
+    <div class="absolute top-1/2 right-10 -translate-y-1/2 w-[500px] h-[500px] bg-brand-terracotta/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            <!-- COLONNE GAUCHE : VISUEL / PHOTO -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative mx-auto max-w-md lg:max-w-none">
+                    <!-- Cadre décoratif Terracotta -->
+                    <div class="absolute -inset-2 border border-brand-terracotta/30 rounded-2xl transform -rotate-1 pointer-events-none"></div>
+                    
+                    <!-- Image de présentation -->
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 aspect-[4/5] shadow-2xl">
+                        <img src="IMAGE/9.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80';" alt="Charly - Vidéaste" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLONNE DROITE : NARRATION & VALEURS -->
+            <div class="lg:col-span-7 space-y-6 text-left">
+                
+                <!-- En-tête -->
+                <div class="space-y-3">
+                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                        Derrière l'objectif
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight">
+                        Charly Munier
+                    </h2>
+                    <p class="text-sm font-semibold text-neutral-400 tracking-wider uppercase">
+                        Vidéaste — CH Production
+                    </p>
+                    <div class="w-12 h-[1px] bg-brand-terracotta/60 my-4"></div>
+                </div>
+
+                <!-- Bio / Storytelling -->
+                <div class="space-y-4 text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
+                    <p>
+                        Ce qui me fait vibrer au quotidien, c'est de transformer une simple idée en image, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
+
+Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
+                    </p>
+                </div>
+
+                <!-- Points forts / Philosophie -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-900">
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
+                            Vision
+                        </h4>
+                        <p class="text-xs text-neutral-400 font-light">
+                            L'authenticité de votre terrain, la force du cinéma.
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
+                            Exigence
+                        </h4>
+                        <p class="text-xs text-neutral-400 font-light">
+                            Captation 4K, travail de la lumière et sound design immersif.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bouton d'action -->
+                <div class="pt-6">
+                    <a href="#contact" class="inline-block bg-transparent border border-brand-terracotta text-brand-terracotta hover:bg-brand-terracotta hover:text-white font-bold text-xs tracking-wider uppercase px-8 py-4 rounded-full transition duration-300">
+                        Me parler de votre projet
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+    <!-- ==========================================
+       SECTION CONTACT & DEMANDE DE DEVIS
+       ========================================== -->
+<section id="contact" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+        
+        <!-- EN-TÊTE -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                Prenons Contact
+            </span>
+            <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight">
+                Discutons de votre projet
+            </h2>
+            <div class="w-12 h-[1px] bg-brand-terracotta/60 mx-auto my-4"></div>
+            <p class="text-xs md:text-sm text-neutral-400 font-light">
+                Remplissez ce formulaire pour recevoir une estimation précise sous 6h.
+            </p>
+        </div>
+
+        <!-- FORMULAIRE -->
+        <form action="#" method="POST" class="bg-neutral-950 border border-neutral-900 p-8 sm:p-12 rounded-2xl space-y-8 shadow-2xl">
+            
+            <!-- 1. TYPE DE PROJET -->
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-white uppercase tracking-wider block" style="font-family: 'Cinzel', serif;">
+                    1. Type de projet
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <label class="cursor-pointer border border-neutral-800 bg-neutral-900/50 hover:border-brand-terracotta rounded-xl p-3 text-center transition">
+                        <input type="radio" name="projet" value="corporate" class="sr-only peer" checked>
+                        <span class="text-xs text-neutral-300 peer-checked:text-brand-terracotta peer-checked:font-bold block">Corporate</span>
+                    </label>
+                    <label class="cursor-pointer border border-neutral-800 bg-neutral-900/50 hover:border-brand-terracotta rounded-xl p-3 text-center transition">
+                        <input type="radio" name="projet" value="evenementiel" class="sr-only peer">
+                        <span class="text-xs text-neutral-300 peer-checked:text-brand-terracotta peer-checked:font-bold block">Événement</span>
+                    </label>
+                    <label class="cursor-pointer border border-neutral-800 bg-neutral-900/50 hover:border-brand-terracotta rounded-xl p-3 text-center transition">
+                        <input type="radio" name="projet" value="tourisme" class="sr-only peer">
+                        <span class="text-xs text-neutral-300 peer-checked:text-brand-terracotta peer-checked:font-bold block">Tourisme</span>
+                    </label>
+                    <label class="cursor-pointer border border-neutral-800 bg-neutral-900/50 hover:border-brand-terracotta rounded-xl p-3 text-center transition">
+                        <input type="radio" name="projet" value="autre" class="sr-only peer">
+                        <span class="text-xs text-neutral-300 peer-checked:text-brand-terracotta peer-checked:font-bold block">Autre</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 2. BUDGET ESTIMÉ -->
+            <div class="space-y-3">
+                <label for="budget" class="text-xs font-bold text-white uppercase tracking-wider block" style="font-family: 'Cinzel', serif;">
+                    2. Enveloppe budgétaire estimée
+                </label>
+                <select id="budget" name="budget" class="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition">
+                    <option value="-1k">Moins de 1 000 € HT</option>
+                    <option value="1k-2.5k">1 000 € – 2 500 € HT</option>
+                    <option value="2.5k-5k">2 500 € – 5 000 € HT</option>
+                    <option value="+5k">+ 5 000 € HT</option>
+                    <option value="a-definir">À définir ensemble</option>
+                </select>
+            </div>
+
+            <!-- 3. COORDONNÉES -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-xs text-neutral-400 block">Nom & Prénom *</label>
+                    <input type="text" required placeholder="Jean Dupont" class="w-full bg-neutral-900 border border-neutral-800 text-white text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs text-neutral-400 block">Entreprise / Structure</label>
+                    <input type="text" placeholder="Nom de votre société" class="w-full bg-neutral-900 border border-neutral-800 text-white text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs text-neutral-400 block">Email professionnel *</label>
+                    <input type="email" required placeholder="contact@entreprise.com" class="w-full bg-neutral-900 border border-neutral-800 text-white text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs text-neutral-400 block">Téléphone *</label>
+                    <input type="tel" required placeholder="06 00 00 00 00" class="w-full bg-neutral-900 border border-neutral-800 text-white text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition">
+                </div>
+            </div>
+
+            <!-- 4. DÉTAILS DU PROJET -->
+            <div class="space-y-2">
+                <label class="text-xs text-neutral-400 block">Présentation rapide du projet</label>
+                <textarea rows="4" placeholder="Objectifs de la vidéo, lieux de tournage, dates envisagées..." class="w-full bg-neutral-900 border border-neutral-800 text-white text-xs rounded-xl p-4 focus:outline-none focus:border-brand-terracotta transition"></textarea>
+            </div>
+
+            <!-- BOUTON D'ENVOI -->
+            <div class="text-center pt-4">
+                <button type="submit" class="w-full sm:w-auto bg-brand-terracotta text-white font-bold text-xs tracking-wider uppercase px-10 py-4 rounded-full hover:bg-white hover:text-black transition duration-200 shadow-lg">
+                    Envoyer ma demande de devis
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+    <!-- ==========================================
+       FOOTER (NAVIGATION À GAUCHE & CONTACT À DROITE)
+       ========================================== -->
+<footer class="bg-brand-dark text-brand-light pt-20 pb-12 border-t border-brand-light/5 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- BLOC PRINCIPAL : GRID À 3 COLONNES -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-brand-light/5 items-center md:items-start">
+            
+            <!-- COLONNE 1 : NAVIGATION (À GAUCHE) -->
+<div class="md:col-span-4 space-y-4 text-center md:text-left order-2 md:order-1">
+    <span class="text-xs font-bold tracking-[0.2em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+        Navigation
+    </span>
+    <ul class="space-y-2.5 text-xs text-brand-muted font-semibold">
+        <li><a href="#camera-trigger" class="hover:text-brand-terracotta transition-colors">Accueil</a></li>
+        <li><a href="#approche" class="hover:text-brand-terracotta transition-colors">Prestations sur-mesure</a></li>
+        <li><a href="#a-propos" class="hover:text-brand-terracotta transition-colors">Qui je suis</a></li>
+        <li><a href="#contact" class="hover:text-brand-terracotta transition-colors">Demander un devis</a></li>
+    </ul>
+</div>
+
+            <!-- COLONNE 2 : LOGO & PITCH (AU CENTRE - AGRANDI) -->
+            <div class="md:col-span-4 flex flex-col items-center text-center space-y-4 order-1 md:order-2">
+                <a href="#" class="inline-block">
+                    <img src="LOGO/3.png" onerror="handleMainLogoError(this)" alt="CH Production Logo" class="h-28 sm:h-36 md:h-40 w-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-300">
+                </a>
+                <p class="text-[10px] text-brand-muted font-bold tracking-wide leading-relaxed max-w-xs uppercase">
+                </p>
+            </div>
+
+            <!-- COLONNE 3 : CONTACT (À DROITE) -->
+            <div class="md:col-span-4 space-y-4 text-center md:text-right order-3">
+                <span class="text-xs font-bold tracking-[0.2em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                    Contact
+                </span>
+                <div class="space-y-3 text-xs text-brand-muted font-semibold">
+                    <a href="mailto:contact@chproduction.fr" class="flex items-center justify-center md:justify-end gap-3 hover:text-brand-terracotta transition-colors">
+                        <span>contact@chproduction.fr</span>
+                        <i class="fa-solid fa-envelope text-brand-terracotta text-sm w-4"></i>
+                    </a>
+                    <div class="flex items-center justify-center md:justify-end gap-3">
+                        <span>Basé à Lyon, France (Déplacements nationaux)</span>
+                        <i class="fa-solid fa-location-dot text-brand-terracotta text-sm w-4"></i>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-end gap-3">
+                        <span>Devis & réponse sous 6h</span>
+                        <i class="fa-solid fa-clock text-brand-terracotta text-sm w-4"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
+        <!-- BLOC BAS : COPYRIGHT -->
+        <div class="pt-8 flex items-center justify-center">
+            
+            <!-- Copyright -->
+            <div class="text-[9px] text-brand-muted uppercase font-bold tracking-widest text-center">
+                &copy; 2026 CH Production. Tous droits réservés.
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
+    <!-- ==========================================
+       JAVASCRIPT DYNAMICS (IMMERSIVE MASK ENGINE)
+       ========================================== -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const triggerSection = document.getElementById('camera-trigger');
+            const cameraContainer = document.getElementById('camera-container');
+            const lensGraphic = document.querySelector('.camera-lens-graphic');
+            const heroWrapper = document.getElementById('hero-content-wrapper');
+
+            const mainHeader = document.getElementById('main-header');
+            const logoImg = mainHeader.querySelector('img');
+            const introLogo = document.getElementById('intro-logo-container');
+
+            if (!triggerSection || !lensGraphic || !heroWrapper) return;
+
+            const rect = triggerSection.getBoundingClientRect();
+            const sectionHeight = triggerSection.offsetHeight;
+            
+            const scrollDistance = -rect.top;
+            const totalScrollable = sectionHeight - window.innerHeight;
+            let progress = scrollDistance / totalScrollable;
+            
+            if (progress < 0) progress = 0;
+            if (progress > 1) progress = 1;
+
+            // Courbe d'asservissement lissée (puissance 2.8) pour la transition
+            const easeProgress = Math.pow(progress, 2.8);
+
+            // Zoom progressif et enveloppant de l'objectif
+            const targetScale = 1 + (easeProgress * 55); 
+            lensGraphic.style.transform = `scale(${targetScale})`;
+
+            // Masque d'immersion circulaire synchronisé
+            const circleRadius = easeProgress * 180; 
+            heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
+
+            // Gestion de l'opacité et de la transition du fond d'écran
+            if (progress > 0.03) {
+                const alphaProgress = (progress - 0.03) / 0.97;
+                lensGraphic.style.opacity = Math.max(0, 1 - (Math.pow(alphaProgress, 2) * 1.5));
+                heroWrapper.style.opacity = Math.min(1, alphaProgress * 3);
+                
+                if (progress > 0.55) {
+                    triggerSection.style.backgroundColor = '#FAF6F0';
+                } else {
+                    triggerSection.style.backgroundColor = '#0B0807';
+                }
+            } else {
+                lensGraphic.style.opacity = 1;
+                heroWrapper.style.opacity = 0;
+                triggerSection.style.backgroundColor = '#0B0807';
+            }
+
+            // Disparition graduelle du logo d'intro (3.png) en haut à gauche
+            if (progress > 0.01) {
+                const fadeFactor = Math.max(0, 1 - (progress / 0.15));
+                introLogo.style.opacity = fadeFactor;
+                introLogo.style.transform = `translateY(-${progress * 60}px)`;
+                
+                if (fadeFactor <= 0) {
+                    introLogo.style.display = 'none';
+                } else {
+                    introLogo.style.display = 'block';
+                }
+            } else {
+                introLogo.style.opacity = '1';
+                introLogo.style.transform = 'translateY(0)';
+                introLogo.style.display = 'block';
+            }
+
+            // Révélation dynamique du Header principal (avec le logo 6.png)
+            if (progress >= 0.70) {
+                mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+                mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+            } else {
+                mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+                mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+            }
+
+            // Masquage complet de l'objectif en fin de défilement pour libérer l'accès aux boutons du Hero
+            if (progress >= 0.80) {
+                cameraContainer.style.opacity = '0';
+                cameraContainer.style.visibility = 'hidden';
+                cameraContainer.style.pointerEvents = 'none';
+                cameraContainer.style.display = 'none';
+            } else {
+                cameraContainer.style.opacity = '1';
+                cameraContainer.style.visibility = 'visible';
+                cameraContainer.style.pointerEvents = 'auto';
+                cameraContainer.style.display = 'flex';
+            }
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = 'fa-solid fa-xmark text-xl';
+            } else {
+                menu.classList.add('hidden');
+                icon.className = 'fa-solid fa-bars text-xl';
+            }
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contact-form');
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            form.reset();
+            setTimeout(() => { toast.classList.add('hidden'); }, 6000);
+        }
+    </script>
+</body>
+</html>

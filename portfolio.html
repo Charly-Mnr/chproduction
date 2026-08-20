@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-black text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio & Réalisations</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-terracotta': '#E07A5F',
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col justify-between" style="font-family: 'Montserrat', sans-serif;">
+
+    <!-- BARRE DE NAVIGATION / RETOUR -->
+<header class="w-full border-b border-neutral-900 py-6 px-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="index.html#hero-content-wrapper" class="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-brand-terracotta transition-colors" style="font-family: 'Cinzel', serif;">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            </svg>
+            <span>Retour à l'accueil</span>
+        </a>
+        <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase" style="font-family: 'Cinzel', serif;">
+            Portfolio
+        </span>
+    </div>
+</header>
+
+    <!-- EN-TÊTE DU PORTFOLIO -->
+    <main class="py-20 max-w-7xl mx-auto px-6 w-full">
+        <div class="mb-16 border-b border-neutral-900 pb-8">
+            <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block mb-3" style="font-family: 'Cinzel', serif;">
+                Sélection de projets
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+                Toutes les réalisations
+            </h1>
+        </div>
+
+        <!-- GRILLE DE VOS 2 PROJETS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <!-- PROJET 01 : JET SKI -->
+            <article class="group bg-neutral-950 border border-neutral-900 hover:border-brand-terracotta/40 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
+                <div>
+                    <div class="relative aspect-video w-full bg-black overflow-hidden">
+                        <video 
+                            controls 
+                            preload="metadata"
+                            poster="MINIATURE/couv_rxp.jpg" 
+                            class="w-full h-full object-cover">
+                            <source src="https://res.cloudinary.com/cjaqyint/video/upload/v1787228785/RXPVF_16_9_2.mp4" type="video/mp4">
+                            Votre navigateur ne prend pas en charge la lecture de vidéos.
+                        </video>
+
+                        <div class="absolute top-4 left-4 pointer-events-none z-10">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-white uppercase bg-black/80 backdrop-blur-md px-3 py-1 border border-neutral-800" style="font-family: 'Cinzel', serif;">
+                                Nautisme & Prestige
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-8">
+                        <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-terracotta transition-colors duration-300 tracking-tight">
+                            Ride Experiences
+                        </h2>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed mb-6">
+                            Chorégraphie nautique aux premières lueurs du jour, magnifiant la fluidité des mouvements, les reflets dorés et la dynamique pure de l'expérience.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="px-6 md:px-8 pb-6 pt-4 border-t border-neutral-900/80 flex items-center justify-between text-[11px] text-neutral-500 font-medium">
+                    <span>Vidéo publicité</span>
+                    <span class="text-neutral-400 group-hover:text-brand-terracotta transition-colors duration-300">Format 16:9</span>
+                </div>
+            </article>
+
+            <!-- PROJET 02 : INTERVIEW BIOGEMM -->
+            <article class="group bg-neutral-950 border border-neutral-900 hover:border-brand-terracotta/40 transition-all duration-500 flex flex-col justify-between h-full overflow-hidden">
+                <div>
+                    <div class="relative aspect-video w-full bg-black overflow-hidden flex items-center justify-center">
+                        <video 
+                            controls 
+                            preload="metadata"
+                            poster="MINIATURE/biogemm_couv.jpg" 
+                            class="w-full h-full object-contain mx-auto">
+                            <source src="https://res.cloudinary.com/cjaqyint/video/upload/v1787229214/BIOGEM_2.mp4" type="video/mp4">
+                            Votre navigateur ne prend pas en charge la lecture de vidéos.
+                        </video>
+
+                        <div class="absolute top-4 left-4 pointer-events-none z-10">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-white uppercase bg-black/80 backdrop-blur-md px-3 py-1 border border-neutral-800" style="font-family: 'Cinzel', serif;">
+                                Marque entreprise
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 md:p-8">
+                        <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-terracotta transition-colors duration-300 tracking-tight">
+                            Biogemm
+                        </h2>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed mb-6">
+                            Prise de parole inspirante et portrait croisé mettant en lumière l'expertise, les valeurs fondamentales et la vision d'innovation naturelle de la marque.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="px-6 md:px-8 pb-6 pt-4 border-t border-neutral-900/80 flex items-center justify-between text-[11px] text-neutral-500 font-medium">
+                    <span>Vidéo interview</span>
+                    <span class="text-neutral-400 group-hover:text-brand-terracotta transition-colors duration-300">Format Vertical 9:16</span>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- PIED DE PAGE DISCRET -->
+    <footer class="w-full border-t border-neutral-900 py-8 text-center text-xs text-neutral-500">
+        <p>© Portfolio — Tous droits réservés</p>
+    </footer>
+
+</body>
+</html>
