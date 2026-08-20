@@ -859,7 +859,7 @@
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
-        // 1. DISPARITION IMMÉDIATE DE "SCROLLEZ..." ET LOGO D'INTRO
+        // 1. EFFACEMENT DE "SCROLLEZ..." ET DU LOGO D'INTRO
         if (scrollDistance > 5) {
             if (scrollHint) {
                 scrollHint.style.opacity = '0';
@@ -874,38 +874,45 @@
             if (introLogo) introLogo.style.opacity = '1';
         }
 
-        // 2. PHASE D'IMMERSION (ZOOM + MASQUE)
-        const easeProgress = Math.pow(progress, 1.0);
-        const targetScale = 1 + (easeProgress * 30); 
+        // 2. ZOOM DE L'OBJECTIF ET DILATATION DU MASQUE CIRCULAIRE
+        const easeProgress = Math.pow(progress, 1.1);
+        
+        // Expansion de la lentille
+        const targetScale = 1 + (easeProgress * 35); 
         lensGraphic.style.transform = `scale(${targetScale})`;
 
-        const circleRadius = easeProgress * 150; 
+        // Le rayon du masque s'ouvre exactement en synchronisation avec le centre de la lentille
+        const circleRadius = easeProgress * 130; 
         heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
 
-        // 3. APPARITION DU CONTENU HÉRO (UNIQUEMENT EN FIN D'IMMERSION)
-        // Bloqué à 0 d'opacité jusqu'à 65% du scroll
-        if (progress > 0.65) {
-            // L'image et le texte apparaissent progressivement de 65% à 85%
-            const heroOpacity = Math.min(1, (progress - 0.65) / 0.20);
+        // 3. RÉVÉLATION DE L'IMAGE AU CENTRE DE LA LENTILLE
+        if (progress > 0.05) {
+            // L'image s'affiche très vite au centre (entre 5% et 20% du scroll)
+            // Mais elle reste découpée dans le cercle de la lentille
+            const heroOpacity = Math.min(1, (progress - 0.05) / 0.15);
             heroWrapper.style.opacity = heroOpacity.toString();
 
-            // La lentille s'efface complètement
-            const lensOpacity = Math.max(0, 1 - ((progress - 0.65) / 0.15));
-            lensGraphic.style.opacity = lensOpacity.toString();
+            // La structure de l'objectif ne s'efface que lorsque la lentille sort de l'écran
+            if (progress > 0.55) {
+                const lensOpacity = Math.max(0, 1 - ((progress - 0.55) / 0.25));
+                lensGraphic.style.opacity = lensOpacity.toString();
+            } else {
+                lensGraphic.style.opacity = '1';
+            }
         } else {
             heroWrapper.style.opacity = '0';
             lensGraphic.style.opacity = '1';
         }
 
-        // 4. TRANSITION DE COULEUR DE FOND
-        if (progress > 0.70) {
+        // 4. TRANSITION DU FOND DE SECTION
+        if (progress > 0.60) {
             triggerSection.style.backgroundColor = '#FAF6F0';
         } else {
             triggerSection.style.backgroundColor = '#0B0807';
         }
 
-        // 5. RÉVÉLATION DU HEADER PRINCIPAL
-        if (progress >= 0.75) {
+        // 5. REVELATION DU HEADER PRINCIPAL
+        if (progress >= 0.70) {
             mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
             mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
         } else {
@@ -913,8 +920,8 @@
             mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
         }
 
-        // 6. MASQUAGE DE LA CAMÉRA
-        if (progress >= 0.88) {
+        // 6. MASQUAGE DE LA CAMÉRA EN FIN DE TRANSITION
+        if (progress >= 0.85) {
             cameraContainer.style.opacity = '0';
             cameraContainer.style.visibility = 'hidden';
             cameraContainer.style.pointerEvents = 'none';
