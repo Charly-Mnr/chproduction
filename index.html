@@ -255,25 +255,10 @@
     <!-- ==========================================
        HERO & ZOOM LENS TRACK CONTAINER
        ========================================== -->
-<div id="camera-trigger" class="relative h-[120dvh] md:h-[200vh] w-full bg-black">
+<div id="camera-trigger" class="relative h-[200vh] w-full bg-black">
 
-    <!-- Animated Camera Lens Overlay & Scroll Indicator -->
-    <div id="camera-container" class="cursor-pointer group" onclick="scrollToFocus()">
-        <div class="relative flex flex-col items-center justify-center">
-            <img src="IMAGE/1.png" onerror="handleImgError(this, 'fa-camera', 'Objectif Photo')" alt="Objectif" class="camera-lens-graphic drop-shadow-2xl md:group-hover:scale-[1.02] transition-transform duration-300">
-            
-            <!-- Indication visuelle de scroll sous l'objectif (Optimisé mobile) -->
-            <div class="focus-text-wrapper absolute -bottom-10 sm:-bottom-16 flex flex-col items-center justify-center space-y-1.5 pointer-events-none z-50">
-                <span id="scroll-hint" class="text-xs uppercase tracking-widest text-neutral-400 transition-opacity duration-150">
-                    Scrollez pour ajuster la mise au point
-                </span>
-                <i class="fa-solid fa-chevron-down text-brand-terracotta text-xs sm:text-sm animate-bounce mobile-no-bounce"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hero Content Section -->
-    <section id="hero-content-wrapper" class="sticky top-0 min-h-screen flex items-center justify-center relative overflow-hidden w-full bg-black">
+    <!-- HERO CONTENT SECTION (Placé derrière l'objectif, masqué à 0% au centre dès le départ) -->
+    <section id="hero-content-wrapper" class="fixed top-0 left-0 w-full h-screen z-10 flex items-center justify-center overflow-hidden bg-black opacity-0 pointer-events-none" style="-webkit-clip-path: circle(0% at 50% 50%); clip-path: circle(0% at 50% 50%);">
         
         <!-- Image de fond (espace.jpg) -->
         <div class="absolute inset-0 z-0">
@@ -283,7 +268,7 @@
         </div>
 
         <!-- BLOC CENTRÉ : Titre + Boutons d'action -->
-        <div class="max-w-5xl mx-auto px-6 w-full relative z-10 text-center flex flex-col justify-center items-center min-h-screen pt-12 pb-36 sm:pb-44">
+        <div class="max-w-5xl mx-auto px-6 w-full relative z-10 text-center flex flex-col justify-center items-center h-full pt-12 pb-36 sm:pb-44">
             
             <!-- Titre principal -->
             <h1 class="text-2xl sm:text-4xl lg:text-5xl text-white font-extrabold leading-none tracking-tight w-full mb-8 sm:mb-10" style="font-family: 'Montserrat', serif; text-transform: none;">
@@ -294,7 +279,7 @@
             </h1>
             
             <!-- Boutons d'action -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto">
                 <a href="#contact" class="bg-brand-terracotta text-white font-bold text-xs tracking-wider uppercase text-center px-8 py-4 rounded-full hover:bg-white hover:text-black transition shadow-lg duration-200">
                     Discuter de votre projet
                 </a>
@@ -302,36 +287,40 @@
 
         </div>
 
-        <!-- BANDEAU LOGOS CLIENTS (VERROUILLÉ TOUT EN BAS DE ESPACE.JPG) -->
+        <!-- BANDEAU LOGOS CLIENTS -->
         <div class="absolute bottom-0 left-0 w-full z-20 px-2 pb-0">
-            
-            <!-- Conteneur verrouillé sur 1 seule ligne (flex-nowrap) avec grande taille -->
             <div class="flex flex-nowrap items-center justify-between sm:justify-center gap-3 sm:gap-8 md:gap-12 w-full max-w-7xl mx-auto">
-                
-                <!-- Logo 1: AMG -->
                 <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
                     <img src="LOGO/LOGO_AMG.png" onerror="this.style.display='none'" alt="AMG" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 </div>
-
-                <!-- Logo 2: ELIXIR -->
                 <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
                     <img src="LOGO/LOGO_ELIXIR.png" onerror="this.style.display='none'" alt="Elixir" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 </div>
-
-                <!-- Logo 3: BIOGEMM -->
                 <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
                     <img src="LOGO/LOGO_BIOGEMM.png" onerror="this.style.display='none'" alt="Biogemm" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 </div>
-
-                <!-- Logo 4: RXP -->
                 <div class="h-16 sm:h-28 md:h-36 w-1/4 max-w-[240px] flex items-center justify-center">
                     <img src="LOGO/LOGO_RXP.png" onerror="this.style.display='none'" alt="RXP" class="max-h-full max-w-full object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 </div>
-
             </div>
         </div>
 
     </section>
+
+    <!-- Animated Camera Lens Overlay & Scroll Indicator (Positionné en FIXED pour rester verrouillé au centre pendant le scroll mobile) -->
+    <div id="camera-container" class="fixed top-0 left-0 w-full h-screen z-30 flex items-center justify-center cursor-pointer group" onclick="scrollToFocus()">
+        <div class="relative flex flex-col items-center justify-center">
+            <img src="IMAGE/1.png" onerror="handleImgError(this, 'fa-camera', 'Objectif Photo')" alt="Objectif" class="camera-lens-graphic w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] object-contain drop-shadow-2xl">
+            
+            <!-- Indication visuelle de scroll sous l'objectif -->
+            <div class="focus-text-wrapper absolute -bottom-10 sm:-bottom-16 flex flex-col items-center justify-center space-y-1.5 pointer-events-none z-50">
+                <span id="scroll-hint" class="text-xs uppercase tracking-widest text-neutral-400 transition-opacity duration-150">
+                    Scrollez pour ajuster la mise au point
+                </span>
+                <i class="fa-solid fa-chevron-down text-brand-terracotta text-xs sm:text-sm animate-bounce mobile-no-bounce"></i>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -858,78 +847,77 @@
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
-        // 1. Adaptation de la réactivité : puissance 1.5 sur mobile pour éviter la zone morte, 2.5 sur PC
+        // 1. Progression homogène sur mobile et PC
         const isMobile = window.innerWidth < 768;
-        const power = isMobile ? 1.5 : 2.5;
+        const power = isMobile ? 1.3 : 2.0;
         const easeProgress = Math.pow(progress, power);
 
-        // 2. Zoom de l'objectif avec accélération GPU (translateZ)
-        const targetScale = 1 + (easeProgress * 50); 
+        // 2. Zoom de l'objectif
+        const targetScale = 1 + (easeProgress * 45); 
         lensGraphic.style.transform = `scale(${targetScale}) translateZ(0)`;
 
-        // 3. Masque circulaire (avec support obligatoire pour Safari Mobile / iOS)
-        const circleRadius = easeProgress * 160; 
+        // 3. Masque circulaire iOS / Android / Desktop
+        const circleRadius = easeProgress * 150; 
         const clipPathValue = `circle(${circleRadius}% at 50% 50%)`;
         heroWrapper.style.clipPath = clipPathValue;
-        heroWrapper.style.webkitClipPath = clipPathValue; // Correctif iOS
+        heroWrapper.style.webkitClipPath = clipPathValue;
 
-        // 4. Gestion de la visibilité et du fond
+        // 4. Visibilité du bloc Hero et réactivation des interactions (boutons)
         if (progress > 0.01) {
-            // L'image héro est active : c'est le masque circulaire qui contrôle son apparition au centre
             heroWrapper.style.opacity = '1';
+            heroWrapper.style.pointerEvents = 'auto';
 
-            // Disparition progressive de la structure métallique de l'objectif
-            const lensOpacity = Math.max(0, 1 - (Math.pow(progress, 2) * 1.5));
+            const lensOpacity = Math.max(0, 1 - (Math.pow(progress, 1.8) * 1.8));
             lensGraphic.style.opacity = lensOpacity;
-            
-            if (progress > 0.55) {
-                triggerSection.style.backgroundColor = '#FAF6F0';
-            } else {
-                triggerSection.style.backgroundColor = '#0B0807';
-            }
         } else {
             lensGraphic.style.opacity = 1;
             heroWrapper.style.opacity = 0;
-            triggerSection.style.backgroundColor = '#0B0807';
+            heroWrapper.style.pointerEvents = 'none';
         }
 
-        // Disparition graduelle du logo d'intro (3.png) en haut à gauche
+        // 5. Logo d'intro
         if (progress > 0.01) {
             const fadeFactor = Math.max(0, 1 - (progress / 0.15));
-            introLogo.style.opacity = fadeFactor;
-            introLogo.style.transform = `translateY(-${progress * 60}px)`;
-            
-            if (fadeFactor <= 0) {
-                introLogo.style.display = 'none';
-            } else {
-                introLogo.style.display = 'block';
+            if (introLogo) {
+                introLogo.style.opacity = fadeFactor;
+                introLogo.style.transform = `translateY(-${progress * 60}px)`;
+                introLogo.style.display = fadeFactor <= 0 ? 'none' : 'block';
             }
-        } else {
+        } else if (introLogo) {
             introLogo.style.opacity = '1';
             introLogo.style.transform = 'translateY(0)';
             introLogo.style.display = 'block';
         }
 
-        // Révélation dynamique du Header principal (avec le logo 6.png)
-        if (progress >= 0.70) {
-            mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
-            mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
-        } else {
-            mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
-            mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+        // 6. Révélation du Header
+        if (mainHeader) {
+            if (progress >= 0.70) {
+                mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+                mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+            } else {
+                mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+                mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+            }
         }
 
-        // Masquage complet de l'objectif en fin de défilement
+        // 7. Sortie de l'overlay d'objectif à la fin de la zone de déclenchement
         if (progress >= 0.85) {
             cameraContainer.style.opacity = '0';
-            cameraContainer.style.visibility = 'hidden';
             cameraContainer.style.pointerEvents = 'none';
-            cameraContainer.style.display = 'none';
+            cameraContainer.style.visibility = 'hidden';
+            
+            // Fixation finale du contenu Hero
+            heroWrapper.style.position = 'absolute';
+            heroWrapper.style.top = 'auto';
+            heroWrapper.style.bottom = '0';
         } else {
             cameraContainer.style.opacity = '1';
-            cameraContainer.style.visibility = 'visible';
             cameraContainer.style.pointerEvents = 'auto';
-            cameraContainer.style.display = 'flex';
+            cameraContainer.style.visibility = 'visible';
+
+            heroWrapper.style.position = 'fixed';
+            heroWrapper.style.top = '0';
+            heroWrapper.style.bottom = 'auto';
         }
     });
 
