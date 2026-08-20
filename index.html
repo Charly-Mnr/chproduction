@@ -265,7 +265,7 @@
             <!-- Indication visuelle de scroll sous l'objectif (Optimisé mobile) -->
             <div class="focus-text-wrapper absolute -bottom-10 sm:-bottom-16 flex flex-col items-center justify-center space-y-1.5 pointer-events-none z-50">
                 <span id="scroll-hint" class="text-xs uppercase tracking-widest text-neutral-400 transition-opacity duration-150">
-                    Scrollez pour la mise au point
+                    Scrollez pour ajuster la mise au point
                 </span>
                 <i class="fa-solid fa-chevron-down text-brand-terracotta text-xs sm:text-sm animate-bounce mobile-no-bounce"></i>
             </div>
@@ -859,14 +859,11 @@
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
-        // 1. EFFACEMENT DE "SCROLLEZ..." ET DU LOGO D'INTRO
-        if (scrollDistance > 5) {
-            if (scrollHint) {
-                scrollHint.style.opacity = '0';
-                scrollHint.style.pointerEvents = 'none';
-            }
+        // 1. DISPARITION IMMÉDIATE DU TEXTE "SCROLLEZ..." ET DU LOGO D'INTRO
+        if (scrollDistance > 10) {
+            if (scrollHint) scrollHint.style.opacity = '0';
             if (introLogo) {
-                const logoFade = Math.max(0, 1 - (progress / 0.08));
+                const logoFade = Math.max(0, 1 - (progress / 0.1));
                 introLogo.style.opacity = logoFade.toString();
             }
         } else {
@@ -874,60 +871,61 @@
             if (introLogo) introLogo.style.opacity = '1';
         }
 
-        // 2. ZOOM DE L'OBJECTIF ET DILATATION DU MASQUE CIRCULAIRE
-        const easeProgress = Math.pow(progress, 1.1);
-        
-        // Expansion de la lentille
-        const targetScale = 1 + (easeProgress * 35); 
+        // 2. SYNCHRONISATION DU ZOOM ET DU MASQUE DE DÉCOUPE
+        // Courbe fluide partagée entre PC et mobile
+        const easeProgress = Math.pow(progress, 1.4);
+
+        // Zoom de l'objectif (l'objectif grossit vers l'extérieur)
+        const targetScale = 1 + (easeProgress * 45); 
         lensGraphic.style.transform = `scale(${targetScale})`;
 
-        // Le rayon du masque s'ouvre exactement en synchronisation avec le centre de la lentille
-        const circleRadius = easeProgress * 130; 
+        // Masque circulaire (le trou s'ouvre depuis le centre exact)
+        const circleRadius = easeProgress * 140; 
         heroWrapper.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
 
-        // 3. RÉVÉLATION DE L'IMAGE AU CENTRE DE LA LENTILLE
-        if (progress > 0.05) {
-            // L'image s'affiche très vite au centre (entre 5% et 20% du scroll)
-            // Mais elle reste découpée dans le cercle de la lentille
-            const heroOpacity = Math.min(1, (progress - 0.05) / 0.15);
-            heroWrapper.style.opacity = heroOpacity.toString();
-
-            // La structure de l'objectif ne s'efface que lorsque la lentille sort de l'écran
-            if (progress > 0.55) {
-                const lensOpacity = Math.max(0, 1 - ((progress - 0.55) / 0.25));
-                lensGraphic.style.opacity = lensOpacity.toString();
-            } else {
-                lensGraphic.style.opacity = '1';
-            }
+        // 3. APPARITION DE L'IMAGE "ESPACE" ET DU TEXTE AU CENTRE
+        // Rend l'image visible immédiatement : c'est le clipPath qui gère ce qui est vu au centre
+        if (progress > 0.01) {
+            heroWrapper.style.opacity = '1';
+            heroWrapper.style.visibility = 'visible';
         } else {
             heroWrapper.style.opacity = '0';
+        }
+
+        // Disparition de la lentille métallique une fois qu'elle a dépassé l'écran
+        if (progress > 0.60) {
+            const lensOpacity = Math.max(0, 1 - ((progress - 0.60) / 0.25));
+            lensGraphic.style.opacity = lensOpacity.toString();
+        } else {
             lensGraphic.style.opacity = '1';
         }
 
-        // 4. TRANSITION DU FOND DE SECTION
-        if (progress > 0.60) {
+        // 4. TRANSITION DU FOND DE LA SECTION
+        if (progress > 0.55) {
             triggerSection.style.backgroundColor = '#FAF6F0';
         } else {
             triggerSection.style.backgroundColor = '#0B0807';
         }
 
-        // 5. REVELATION DU HEADER PRINCIPAL
+        // 5. RÉVÉLATION DU HEADER PRINCIPAL
         if (progress >= 0.70) {
-            mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
-            mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+            if (mainHeader) {
+                mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+                mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+            }
         } else {
-            mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
-            mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+            if (mainHeader) {
+                mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
+                mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
+            }
         }
 
-        // 6. MASQUAGE DE LA CAMÉRA EN FIN DE TRANSITION
+        // 6. MASQUAGE DE LA STRUCTURE CAMÉRA EN FIN DE TRANSITION
         if (progress >= 0.85) {
             cameraContainer.style.opacity = '0';
-            cameraContainer.style.visibility = 'hidden';
             cameraContainer.style.pointerEvents = 'none';
         } else {
             cameraContainer.style.opacity = '1';
-            cameraContainer.style.visibility = 'visible';
             cameraContainer.style.pointerEvents = 'auto';
         }
     });
