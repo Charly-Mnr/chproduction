@@ -144,33 +144,42 @@
            ========================================================= */
         @media (max-width: 768px) {
             #camera-trigger {
-                height: 300dvh !important; /* Rallongé à 300dvh pour laisser le temps d'immerger avant d'afficher espace.jpg */
-            }
+  position: relative;
+  height: 250vh; /* Permet d'avoir une vraie zone de défilement pour l'effet */
+}
 
-            #camera-container {
-                height: 100dvh !important;
-                transform: translate3d(0,0,0);
-                -webkit-transform: translate3d(0,0,0);
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-            }
+#camera-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-            .camera-lens-graphic {
-                width: 280px !important;
-                height: 280px !important;
-                filter: none !important;
-                -webkit-filter: none !important;
-                drop-shadow: none !important;
-            }
+/* Le masque héro : caché au départ, révélé uniquement par le disque */
+#hero-content-wrapper {
+  opacity: 0;
+  clip-path: circle(0% at 50% 50%);
+  -webkit-clip-path: circle(0% at 50% 50%);
+  transition: opacity 0.1s linear;
+  will-change: clip-path, transform;
+}
 
-            /* Remplacement du clip-path gourmand par un simple fondu d'opacité GPU */
-            #hero-content-wrapper {
-                min-height: 100dvh !important;
-                clip-path: none !important;
-                -webkit-clip-path: none !important;
-                transform: translate3d(0,0,0);
-                -webkit-transform: translate3d(0,0,0);
-            }
+/* Graphic de l'objectif */
+.camera-lens-graphic {
+  transform-origin: center center;
+  will-change: transform, opacity;
+  transition: opacity 0.1s linear;
+}
+
+/* Gestion propre des logos et headers */
+#intro-logo-container {
+  will-change: transform, opacity;
+  transition: opacity 0.1s linear;
+}
         }
     </style>
     <script>
@@ -838,104 +847,69 @@
    ========================================== -->
 <script>
     window.addEventListener('scroll', function() {
-        const triggerSection = document.getElementById('camera-trigger');
-        const cameraContainer = document.getElementById('camera-container');
-        const lensGraphic = document.querySelector('.camera-lens-graphic');
-        const heroWrapper = document.getElementById('hero-content-wrapper');
+    const triggerSection = document.getElementById('camera-trigger');
+    const lensGraphic = document.querySelector('.camera-lens-graphic');
+    const heroWrapper = document.getElementById('hero-content-wrapper');
 
-        const mainHeader = document.getElementById('main-header');
-        const introLogo = document.getElementById('intro-logo-container');
+    const mainHeader = document.getElementById('main-header');
+    const introLogo = document.getElementById('intro-logo-container');
 
-        if (!triggerSection || !lensGraphic || !heroWrapper) return;
+    if (!triggerSection || !lensGraphic || !heroWrapper) return;
 
-        const rect = triggerSection.getBoundingClientRect();
-        const sectionHeight = triggerSection.offsetHeight;
-        
-        const scrollDistance = -rect.top;
-        const totalScrollable = sectionHeight - window.innerHeight;
-        let progress = scrollDistance / totalScrollable;
-        
-        if (progress < 0) progress = 0;
-        if (progress > 1) progress = 1;
+    // Calcul de la progression sur la hauteur totale de la section (250vh)
+    const rect = triggerSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const totalScrollable = triggerSection.offsetHeight - windowHeight;
+    
+    // Progress va de 0 (début de section) à 1 (fin de section)
+    let progress = -rect.top / totalScrollable;
+    progress = Math.max(0, Math.min(1, progress));
 
-        // 1. Adaptation de la réactivité : puissance 1.5 sur mobile pour éviter la zone morte, 2.5 sur PC
-        const isMobile = window.innerWidth < 768;
-        const power = isMobile ? 1.5 : 2.5;
-        const easeProgress = Math.pow(progress, power);
+    // 1. Zoom agressif de l'objectif
+    const scaleValue = 1 + (Math.pow(progress, 2) * 60); 
+    lensGraphic.style.transform = `scale(${scaleValue}) translateZ(0)`;
 
-        // 2. Zoom de l'objectif avec accélération GPU (translateZ)
-        const targetScale = 1 + (easeProgress * 50); 
-        lensGraphic.style.transform = `scale(${targetScale}) translateZ(0)`;
+    // 2. Fondu de disparition de la structure mécanique de l'objectif (disparaît totalement dès 40% du scroll)
+    const lensOpacity = Math.max(0, 1 - (progress * 2.5));
+    lensGraphic.style.opacity = lensOpacity;
 
-        // 3. Masque circulaire (avec support obligatoire pour Safari Mobile / iOS)
-        const circleRadius = easeProgress * 160; 
-        const clipPathValue = `circle(${circleRadius}% at 50% 50%)`;
-        heroWrapper.style.clipPath = clipPathValue;
-        heroWrapper.style.webkitClipPath = clipPathValue; // Correctif iOS
+    // 3. Masque circulaire d'ouverture (support Safari iOS inclut)
+    const circleRadius = progress * 180; 
+    const clipPathValue = `circle(${circleRadius}% at 50% 50%)`;
+    heroWrapper.style.clipPath = clipPathValue;
+    heroWrapper.style.webkitClipPath = clipPathValue;
 
-        // 4. Gestion de la visibilité et du fond
-        if (progress > 0.01) {
-            // L'image héro est active : c'est le masque circulaire qui contrôle son apparition au centre
-            heroWrapper.style.opacity = '1';
+    // Révélation du contenu Héro
+    if (progress > 0.02) {
+        heroWrapper.style.opacity = '1';
+    } else {
+        heroWrapper.style.opacity = '0';
+    }
 
-            // Disparition progressive de la structure métallique de l'objectif
-            const lensOpacity = Math.max(0, 1 - (Math.pow(progress, 2) * 1.5));
-            lensGraphic.style.opacity = lensOpacity;
-            
-            if (progress > 0.55) {
-                triggerSection.style.backgroundColor = '#FAF6F0';
-            } else {
-                triggerSection.style.backgroundColor = '#0B0807';
-            }
-        } else {
-            lensGraphic.style.opacity = 1;
-            heroWrapper.style.opacity = 0;
-            triggerSection.style.backgroundColor = '#0B0807';
-        }
+    // 4. Disparition progressive du logo d'intro (3.png) au scroll
+    if (introLogo) {
+        const logoOpacity = Math.max(0, 1 - (progress * 4)); // Disparaît très vite dès le début
+        introLogo.style.opacity = logoOpacity;
+        introLogo.style.transform = `translateY(-${progress * 80}px)`;
+    }
 
-        // Disparition graduelle du logo d'intro (3.png) en haut à gauche
-        if (progress > 0.01) {
-            const fadeFactor = Math.max(0, 1 - (progress / 0.15));
-            introLogo.style.opacity = fadeFactor;
-            introLogo.style.transform = `translateY(-${progress * 60}px)`;
-            
-            if (fadeFactor <= 0) {
-                introLogo.style.display = 'none';
-            } else {
-                introLogo.style.display = 'block';
-            }
-        } else {
-            introLogo.style.opacity = '1';
-            introLogo.style.transform = 'translateY(0)';
-            introLogo.style.display = 'block';
-        }
-
-        // Révélation dynamique du Header principal (avec le logo 6.png)
-        if (progress >= 0.70) {
+    // 5. Apparition du Header principal avec le logo 6.png
+    if (mainHeader) {
+        if (progress >= 0.60) {
             mainHeader.classList.remove('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
             mainHeader.classList.add('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
         } else {
             mainHeader.classList.remove('bg-black/90', 'backdrop-blur-md', 'opacity-100', 'pointer-events-auto', 'border-brand-dark/5');
             mainHeader.classList.add('bg-transparent', 'opacity-0', 'pointer-events-none', 'border-transparent');
         }
+    }
+});
 
-        // Masquage complet de l'objectif en fin de défilement
-        if (progress >= 0.85) {
-            cameraContainer.style.opacity = '0';
-            cameraContainer.style.visibility = 'hidden';
-            cameraContainer.style.pointerEvents = 'none';
-            cameraContainer.style.display = 'none';
-        } else {
-            cameraContainer.style.opacity = '1';
-            cameraContainer.style.visibility = 'visible';
-            cameraContainer.style.pointerEvents = 'auto';
-            cameraContainer.style.display = 'flex';
-        }
-    });
-
-    function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        const icon = document.getElementById('menu-icon');
+// Fonctions utilitaires du menu mobile & formulaire
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+    if (menu && icon) {
         if (menu.classList.contains('hidden')) {
             menu.classList.remove('hidden');
             icon.className = 'fa-solid fa-xmark text-xl';
@@ -944,14 +918,17 @@
             icon.className = 'fa-solid fa-bars text-xl';
         }
     }
+}
 
-    function handleContactSubmit(event) {
-        event.preventDefault();
-        const form = document.getElementById('contact-form');
-        const toast = document.getElementById('toast');
-        toast.classList.remove('hidden');
-        form.reset();
-        setTimeout(() => { toast.classList.add('hidden'); }, 6000);
+function handleContactSubmit(event) {
+    event.preventDefault();
+    const form = document.getElementById('contact-form');
+    const toast = document.getElementById('toast');
+    if (toast) toast.classList.remove('hidden');
+    if (form) form.reset();
+    setTimeout(() => { 
+        if (toast) toast.classList.add('hidden'); 
+    }, 6000);
     }
 </script>
 </body>
