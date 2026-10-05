@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-black text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numérisation VHS — CH Production</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-terracotta': '#E07A5F',
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Hanken+Grotesk:wght@400;500;600&family=Bebas+Neue&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body{font-family:'Hanken Grotesk',sans-serif}
+        .sign{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em}
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen" style="background:#000000">
+
+    <!-- BARRE DE NAVIGATION / RETOUR -->
+    <header class="w-full border-b border-neutral-900 py-5 px-6" style="position:sticky;top:0;z-index:30;background:rgba(0,0,0,0.92);backdrop-filter:blur(8px)">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html#hero-content-wrapper" class="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-brand-terracotta transition-colors" style="font-family: 'Cinzel', serif;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+                </svg>
+                <span>Retour à l'accueil</span>
+            </a>
+            <a href="index.html" class="inline-flex items-center">
+                <img src="IMAGE/6.png" onerror="this.style.display='none'" alt="CH Production" class="h-6 w-auto object-contain">
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO : LOGO VHS CLUB + ACCROCHE -->
+    <section class="pt-16 px-6 flex flex-col items-center">
+        <div class="w-full flex justify-center" style="max-width:620px">
+            <img src="IMAGE/vhs-club-logo.png" alt="VHS Club" class="w-full h-auto block">
+        </div>
+
+        <div class="relative text-center flex flex-col items-center gap-5 mt-2 pb-16" style="max-width:720px">
+            <h1 class="font-extrabold leading-tight" style="font-family:'Montserrat',sans-serif;font-size:38px;color:#F3EFE9">
+                Vos souvenirs méritent de<br>
+                <span style="text-shadow:0 0 10px #c53661, 0 0 26px rgba(197,54,97,.7)">traverser le temps.</span>
+            </h1>
+            <p class="text-sm leading-relaxed" style="max-width:520px;color:#B9ACA6">
+                Vos cassettes sont numérisées avec le même soin qu'un film de cinéma, pour ne jamais perdre une image de ce qui compte.
+            </p>
+            <a href="index.html#contact" class="mt-2 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-wider text-white" style="background:linear-gradient(90deg,#c53661,#F2A93B);box-shadow:0 8px 24px rgba(197,54,97,.35)">
+                Demander ma numérisation
+            </a>
+        </div>
+    </section>
+
+    <!-- FORMATS PRIS EN CHARGE -->
+    <section class="px-6 flex justify-center" style="padding-top:60px">
+        <div class="text-center text-sm leading-relaxed" style="max-width:620px;color:#B9ACA6">
+            <span class="font-bold" style="color:#35D4E0">Formats pris en charge : VHS et VHS-C uniquement.</span>
+        </div>
+    </section>
+
+    <!-- COMMENT ÇA MARCHE -->
+    <section class="px-6 flex flex-col gap-10" style="padding-top:90px;max-width:1312px;margin:0 auto;width:100%">
+        <h2 class="text-center font-extrabold" style="font-family:'Montserrat',sans-serif;font-size:28px">Comment ça marche</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex rounded-md overflow-hidden" style="background:#121014">
+                <div class="flex items-center justify-center flex-shrink-0" style="width:70px;border-right:2px dashed rgba(53,212,224,.4)">
+                    <span class="sign" style="font-size:40px;color:#35D4E0">01</span>
+                </div>
+                <div class="p-6 flex flex-col gap-1.5">
+                    <div class="text-xs font-bold uppercase">Dépôt ou envoi</div>
+                    <div class="text-xs leading-relaxed" style="color:#8C7B76">En main propre sur Lyon, ou par envoi postal assuré.</div>
+                </div>
+            </div>
+            <div class="flex rounded-md overflow-hidden" style="background:#121014">
+                <div class="flex items-center justify-center flex-shrink-0" style="width:70px;border-right:2px dashed rgba(53,212,224,.4)">
+                    <span class="sign" style="font-size:40px;color:#35D4E0">02</span>
+                </div>
+                <div class="p-6 flex flex-col gap-1.5">
+                    <div class="text-xs font-bold uppercase">Numérisation soignée</div>
+                    <div class="text-xs leading-relaxed" style="color:#8C7B76">Chaque cassette traitée individuellement, contrôle qualité.</div>
+                </div>
+            </div>
+            <div class="flex rounded-md overflow-hidden" style="background:#121014">
+                <div class="flex items-center justify-center flex-shrink-0" style="width:70px;border-right:2px dashed rgba(53,212,224,.4)">
+                    <span class="sign" style="font-size:40px;color:#35D4E0">03</span>
+                </div>
+                <div class="p-6 flex flex-col gap-1.5">
+                    <div class="text-xs font-bold uppercase">Livraison</div>
+                    <div class="text-xs leading-relaxed" style="color:#8C7B76">Clé USB ou lien de téléchargement, sous 2 à 3 semaines.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARIFS -->
+    <section class="px-6 flex flex-col gap-9" style="padding:100px 24px;max-width:1312px;margin:0 auto;width:100%">
+        <h2 class="text-center font-extrabold" style="font-family:'Montserrat',sans-serif;font-size:28px">Une formule pour chaque souvenir</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="rounded-md p-7 flex flex-col gap-2.5" style="background:#121014">
+                <div class="text-xs font-bold uppercase" style="color:#8C7B76">À l'unité</div>
+                <div class="sign" style="font-size:36px;color:#35D4E0">18€</div>
+                <div class="text-xs" style="color:#8C7B76">1 cassette, fichier numérique livré.</div>
+            </div>
+            <div class="relative rounded-md p-7 flex flex-col gap-2.5 overflow-hidden" style="background:#171018;box-shadow:0 0 0 2px #c53661, 0 0 24px rgba(197,54,97,.25)">
+                <div class="sign absolute text-white text-xs" style="top:14px;right:-32px;transform:rotate(40deg);background:linear-gradient(90deg,#c53661,#F2A93B);padding:3px 36px">PROMO</div>
+                <div class="text-xs font-bold uppercase" style="color:#F3EFE9">Pack famille</div>
+                <div class="sign" style="font-size:26px;color:#F2A93B">Tarif dégressif</div>
+                <div class="text-xs" style="color:#B9ACA6">5 à 10 cassettes, support USB inclus.</div>
+            </div>
+            <div class="rounded-md p-7 flex flex-col gap-2.5" style="background:#121014">
+                <div class="text-xs font-bold uppercase" style="color:#8C7B76">Pack mémoire</div>
+                <div class="sign" style="font-size:26px;color:#35D4E0">Devis personnalisé</div>
+                <div class="text-xs" style="color:#8C7B76">+10 cassettes, montage « best-of » en option.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POINTS DE RÉASSURANCE -->
+    <section class="px-6" style="max-width:1312px;margin:0 auto 90px;width:100%">
+        <div class="rounded-lg p-8 flex flex-wrap gap-8 justify-between" style="background:#121014">
+            <div class="flex items-center gap-2.5 text-xs" style="color:#8C7B76"><span style="color:#35D4E0">●</span> Cassettes manipulées avec soin</div>
+            <div class="flex items-center gap-2.5 text-xs" style="color:#8C7B76"><span style="color:#35D4E0">●</span> Fichiers livrés en MP4 ou clé USB</div>
+            <div class="flex items-center gap-2.5 text-xs" style="color:#8C7B76"><span style="color:#35D4E0">●</span> Délai annoncé : 2 à 3 semaines</div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="px-6" style="max-width:1312px;margin:0 auto 90px;width:100%">
+        <div class="rounded-lg p-12 md:p-16 flex flex-col items-center text-center gap-4" style="background:#121014;border:1px solid rgba(197,54,97,.4)">
+            <h2 class="font-extrabold" style="font-family:'Montserrat',sans-serif;font-size:28px;max-width:600px">Prêt à faire revivre vos souvenirs ?</h2>
+            <p class="text-sm" style="color:#8C7B76">Dites-nous combien de cassettes vous avez, on s'occupe du reste.</p>
+            <a href="index.html#contact" class="mt-2 px-9 py-4 rounded-full text-xs font-bold uppercase tracking-wider text-white" style="background:linear-gradient(90deg,#c53661,#F2A93B)">
+                Demander un devis
+            </a>
+        </div>
+    </section>
+
+    <!-- PIED DE PAGE -->
+    <footer class="w-full border-t border-neutral-900 py-8 text-center text-xs" style="color:#8C7B76">
+        <p>© 2026 CH Production — Charly Munier</p>
+    </footer>
+
+</body>
+</html>

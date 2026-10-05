@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Tailwind CSS -->
@@ -174,13 +175,13 @@
         @media (max-width: 768px) {
             #camera-trigger {
   position: relative;
-  height: 250vh; /* Permet d'avoir une vraie zone de défilement pour l'effet */
+  height: 250dvh; /* dvh = s'adapte quand la barre d'adresse mobile apparait/disparait (vh sautait) */
 }
 
 #camera-container {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -190,10 +191,10 @@
 
 /* Le masque héro : caché au départ, révélé uniquement par le disque */
 #hero-content-wrapper {
+  height: 100dvh;
   opacity: 0;
   clip-path: circle(0% at 50% 50%);
   -webkit-clip-path: circle(0% at 50% 50%);
-  transition: opacity 0.1s linear;
   will-change: clip-path, transform;
 }
 
@@ -201,15 +202,22 @@
 .camera-lens-graphic {
   transform-origin: center center;
   will-change: transform, opacity;
-  transition: opacity 0.1s linear;
 }
 
 /* Gestion propre des logos et headers */
 #intro-logo-container {
   will-change: transform, opacity;
-  transition: opacity 0.1s linear;
 }
         }
+
+        /* Filmstrip services (défilement) */
+        .filmstrip-wrap{overflow:hidden;width:100%}
+        .filmstrip-track{display:flex;gap:0;width:max-content;animation:filmstripScroll 32s linear infinite}
+        .filmstrip-wrap:hover .filmstrip-track{animation-play-state:paused}
+        @keyframes filmstripScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        .filmstrip-tile{position:relative;flex-shrink:0;width:280px;height:360px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(243,239,233,.1);background-size:cover;background-position:center;display:block}
+        .filmstrip-overlay{position:absolute;inset:0;background:rgba(11,8,7,.32)}
+        .filmstrip-caption{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#F3EFE9;text-shadow:0 2px 10px rgba(0,0,0,.6);padding:0 16px}
     </style>
     <script>
         function handleImgError(img, fallbackIcon, label) {
@@ -268,6 +276,8 @@
             <!-- Menu de navigation ordinateur -->
             <nav id="main-navigation" class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase transition-all duration-500">
                 <a href="#projets" class="text-white hover:text-brand-terracotta transition">Créations</a>
+                <a href="#services" class="text-white hover:text-brand-terracotta transition">Prestations</a>
+                <a href="numerisation-vhs.html" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;font-weight:400;color:#35D4E0;text-shadow:0 0 8px rgba(53,212,224,.6)">Numérisation <span style="color:#ff6ec7;text-shadow:0 0 8px rgba(255,110,199,.6)">VHS</span></a>
                 <a href="#approche" class="text-white hover:text-brand-terracotta transition">Mon Approche</a>
                 <a href="#a-propos" class="text-white hover:text-brand-terracotta transition">À Propos</a>
                 <a href="#contact" class="bg-brand-dark text-brand-light px-5 py-2.5 rounded-full hover:bg-brand-terracotta transition shadow-sm">Me Contacter</a>
@@ -283,6 +293,8 @@
         <div id="mobile-menu" class="hidden md:hidden bg-black border-b border-brand-dark/10 px-6 py-6 absolute w-full left-0 z-40 transition-all">
             <nav class="flex flex-col gap-4 text-xs font-bold tracking-widest uppercase">
                 <a href="#projets" onclick="toggleMobileMenu()" class="text-white py-2">Créations</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="text-white py-2">Prestations</a>
+                <a href="numerisation-vhs.html" onclick="toggleMobileMenu()" class="py-2" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;color:#35D4E0">Numérisation <span style="color:#ff6ec7">VHS</span></a>
                 <a href="#approche" onclick="toggleMobileMenu()" class="text-white py-2">Mon Approche</a>
                 <a href="#a-propos" onclick="toggleMobileMenu()" class="text-white py-2">À Propos</a>
                 <a href="#contact" onclick="toggleMobileMenu()" class="bg-brand-dark text-brand-light px-5 py-3 rounded-full text-center hover:bg-brand-terracotta transition mt-2">Me Contacter</a>
@@ -431,6 +443,40 @@
 
 
 <!-- ==========================================
+       SECTION PRESTATIONS (5 types de vidéos)
+       ========================================== -->
+<section id="services" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900" style="font-family: 'Montserrat', sans-serif;">
+    <div class="max-w-7xl mx-auto px-6 mb-14">
+        <div class="text-center flex flex-col items-center gap-3">
+            <h2 class="text-3xl sm:text-4xl font-extrabold">Des vidéos pensées pour chaque besoin</h2>
+            <p class="text-neutral-400 text-sm max-w-xl mx-auto">Cinq registres, une même exigence : une image soignée et une histoire qui sert votre projet.</p>
+        </div>
+    </div>
+    <div class="filmstrip-wrap">
+        <div class="filmstrip-track"><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btob.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Corporate</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btoc.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">BtoC</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/event.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Event</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/mariage.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Mariage</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/tourisme.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Tourisme</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btob.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Corporate</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btoc.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">BtoC</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/event.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Event</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/mariage.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Mariage</span></a><a href="#contact" class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/tourisme.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Tourisme</span></a></div>
+    </div>
+</section>
+
+
+<!-- ==========================================
+       TEASER NUMÉRISATION VHS
+       ========================================== -->
+<section class="w-full block clear-both bg-black" style="padding:72px 24px;border-top:1px solid rgba(243,239,233,0.08);border-bottom:1px solid rgba(243,239,233,0.08)">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-10" style="padding:40px;border-radius:12px;background:#0A0A0B;box-shadow:0 0 0 1px rgba(197,54,97,.5), 0 0 30px rgba(197,54,97,.15)">
+        <div class="flex flex-col gap-3.5" style="max-width:460px">
+            <span class="inline-block" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff6ec7;border:1px solid #ff6ec7;border-radius:999px;padding:4px 10px">VHS CLUB</span>
+            <h2 class="m-0" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;font-size:32px;color:#F3EFE9;text-shadow:0 0 8px #35D4E0, 0 0 22px rgba(53,212,224,.5)">Numérisation VHS</h2>
+            <p class="m-0 text-sm" style="color:#B9ACA6;line-height:1.6">Vos souvenirs méritent de traverser le temps. Une offre pensée pour les particuliers, avec un registre visuel vintage dédié.</p>
+            <a href="numerisation-vhs.html" class="self-start" style="margin-top:4px;padding:12px 26px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#c53661,#F2A93B)">Découvrir l'offre →</a>
+        </div>
+        <div style="width:220px;height:140px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0;background:#0A0A0B">
+            <img src="IMAGE/cassette-vhs.png" alt="Cassette VHS" style="width:100%;height:100%;object-fit:contain;padding:14px;box-sizing:border-box">
+        </div>
+    </div>
+</section>
+
+
+<!-- ==========================================
        SECTION MON APPROCHE & SUR-MESURE
        ========================================== -->
 <section id="approche" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
@@ -450,7 +496,7 @@
                         Méthodologie & Exigence
                     </span>
                     <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
-                        Une Approche 100% Sur-Mesure
+                        Une approche 100% sur-mesure
                     </h2>
                 </div>
 
@@ -661,7 +707,7 @@
                 <!-- Bio / Storytelling -->
                 <div class="space-y-4 text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
                     <p>
-                        Ce qui me fait vibrer au quotidien, c'est de transformer une simple idée en image, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
+                        Parce que les émotions ne s'inventent pas, je mets un point d'honneur à transformer chaque idée simple en image forte, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
                     </p>
                     <p>
                         Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
@@ -926,13 +972,16 @@
             const power = isMobile ? 1.4 : 2.0;
             const easeProgress = Math.pow(progress, power);
 
-            // Zoom de l'objectif
-            const scaleValue = 1 + (easeProgress * 60); 
-            lensGraphic.style.transform = `scale3d(${scaleValue}, ${scaleValue}, 1)`;
-
-            // Fondu de l'objectif
+            // Fondu de l'objectif (devient invisible dès 40% du scroll)
             const lensOpacity = Math.max(0, 1 - (progress * 2.5));
             lensGraphic.style.opacity = lensOpacity;
+
+            // Zoom de l'objectif : inutile de continuer à recalculer le scale une fois l'objectif invisible
+            // (il grossissait sinon jusqu'a x61 pour rien jusqu'a 100% du scroll, couteux a restituer sur mobile)
+            if (lensOpacity > 0) {
+                const scaleValue = 1 + (easeProgress * 60);
+                lensGraphic.style.transform = `scale3d(${scaleValue}, ${scaleValue}, 1)`;
+            }
 
             // Masque circulaire
             const circleRadius = easeProgress * 150; 
