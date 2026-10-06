@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJ1LVFNLE3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-ZJ1LVFNLE3');
-    </script>
+    <!-- Cookie consent + Google tag (chargé uniquement après consentement) -->
+    <script defer src="cookie-consent.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charly Munier | CH Production</title>
@@ -958,8 +951,14 @@
 
         </div>
 
-        <!-- BLOC BAS : COPYRIGHT -->
-        <div class="pt-8 flex items-center justify-center">
+        <!-- BLOC BAS : LIENS LÉGAUX + COPYRIGHT -->
+        <div class="pt-8 flex flex-col items-center justify-center gap-4">
+            <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[10px] text-brand-muted font-semibold uppercase tracking-widest">
+                <a href="mentions-legales.html" class="hover:text-brand-terracotta transition-colors">Mentions légales</a>
+                <a href="politique-confidentialite.html" class="hover:text-brand-terracotta transition-colors">Politique de confidentialité</a>
+                <a href="cgv.html" class="hover:text-brand-terracotta transition-colors">CGV</a>
+                <a href="#" class="js-manage-cookies hover:text-brand-terracotta transition-colors">Gérer mes cookies</a>
+            </div>
             <div class="text-[9px] text-brand-muted uppercase font-bold tracking-widest text-center">
                 &copy; 2026 CH Production. Tous droits réservés.
             </div>
