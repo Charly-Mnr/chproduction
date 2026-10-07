@@ -311,7 +311,7 @@
             <!-- Menu de navigation ordinateur -->
             <nav id="main-navigation" class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase transition-all duration-500">
                 <a href="#projets" class="text-white hover:text-brand-terracotta transition">Créations</a>
-                <a href="#services" class="text-white hover:text-brand-terracotta transition">Prestations</a>
+                <a href="#offres" class="text-white hover:text-brand-terracotta transition">Prestations</a>
                 <a href="numerisation-vhs.html" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;font-weight:400;color:#35D4E0;text-shadow:0 0 8px rgba(53,212,224,.6)">Numérisation <span style="color:#ff6ec7;text-shadow:0 0 8px rgba(255,110,199,.6)">VHS</span></a>
                 <a href="#approche" class="text-white hover:text-brand-terracotta transition">Mon Approche</a>
                 <a href="#a-propos" class="text-white hover:text-brand-terracotta transition">À Propos</a>
@@ -328,7 +328,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-black border-b border-brand-dark/10 px-6 py-6 absolute w-full left-0 z-40 transition-all">
             <nav class="flex flex-col gap-4 text-xs font-bold tracking-widest uppercase">
                 <a href="#projets" onclick="toggleMobileMenu()" class="text-white py-2">Créations</a>
-                <a href="#services" onclick="toggleMobileMenu()" class="text-white py-2">Prestations</a>
+                <a href="#offres" onclick="toggleMobileMenu()" class="text-white py-2">Prestations</a>
                 <a href="numerisation-vhs.html" onclick="toggleMobileMenu()" class="py-2" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;color:#35D4E0">Numérisation <span style="color:#ff6ec7">VHS</span></a>
                 <a href="#approche" onclick="toggleMobileMenu()" class="text-white py-2">Mon Approche</a>
                 <a href="#a-propos" onclick="toggleMobileMenu()" class="text-white py-2">À Propos</a>
@@ -478,34 +478,81 @@
 
 
 <!-- ==========================================
-       SECTION PRESTATIONS (5 types de vidéos)
+       SECTION NOS OFFRES (grille par type de projet)
        ========================================== -->
-<section id="services" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900" style="font-family: 'Montserrat', sans-serif;">
+<section id="offres" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900" style="font-family: 'Montserrat', sans-serif;">
     <div class="max-w-7xl mx-auto px-6 mb-14">
         <div class="text-center flex flex-col items-center gap-3">
-            <h2 class="text-3xl sm:text-4xl font-extrabold">Des vidéos pensées pour chaque besoin</h2>
-            <p class="text-neutral-400 text-sm max-w-xl mx-auto">Cinq registres, une même exigence : une image soignée et une histoire qui sert votre projet.</p>
+            <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">Prestations</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold">Une offre dédiée à chaque projet</h2>
+            <p class="text-neutral-400 text-sm max-w-xl mx-auto">Déroulé détaillé et tarifs indicatifs pour chaque type de projet.</p>
         </div>
     </div>
-    <div class="filmstrip-wrap">
-        <div class="filmstrip-track"><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btob.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Corporate</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btoc.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">BtoC</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/event.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Event</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/mariage.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Mariage</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/tourisme.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Tourisme</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btob.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Corporate</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/btoc.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">BtoC</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/event.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Event</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/mariage.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Mariage</span></div><div class="filmstrip-tile" style="background-image:url('IMAGE/type%20video/web/tourisme.jpg')"><div class="filmstrip-overlay"></div><span class="filmstrip-caption">Tourisme</span></div></div>
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-900">
+                <a href="corporate.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/btob.jpg" alt="Corporate" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Corporate</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Entreprises &amp; marques</span>
+                    </div>
+                </a>
+                <a href="souvenirs-portraits.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/souvenirs-portraits.jpg" alt="Souvenirs &amp; portraits" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Souvenirs &amp; portraits</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Grand public &amp; particuliers</span>
+                    </div>
+                </a>
+                <a href="evenementiel.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/event.jpg" alt="Event" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Event</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Conférences &amp; lancements</span>
+                    </div>
+                </a>
+                <a href="mariage.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/mariage.jpg" alt="Mariage" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Mariage</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Cérémonie &amp; réception</span>
+                    </div>
+                </a>
+                <a href="tourisme.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/tourisme.jpg" alt="Tourisme" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Tourisme</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Hôtels &amp; destinations</span>
+                    </div>
+                </a>
+                <a href="reseaux-sociaux.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/reseaux-sociaux.jpg" alt="Réseaux sociaux" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Réseaux sociaux</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">En partenariat avec AMG COM</span>
+                    </div>
+                </a>
     </div>
 </section>
-
 
 <!-- ==========================================
        TEASER NUMÉRISATION VHS
        ========================================== -->
 <section class="w-full block clear-both bg-black" style="padding:72px 24px;border-top:1px solid rgba(243,239,233,0.08);border-bottom:1px solid rgba(243,239,233,0.08)">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-10" style="padding:40px;border-radius:12px;background:#0A0A0B;box-shadow:0 0 0 1px rgba(197,54,97,.5), 0 0 30px rgba(197,54,97,.15)">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-10" style="padding:40px;border-radius:12px;background:#000">
         <div class="flex flex-col gap-3.5" style="max-width:460px">
             <span class="inline-block" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff6ec7;border:1px solid #ff6ec7;border-radius:999px;padding:4px 10px">VHS CLUB</span>
             <h2 class="m-0" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;font-size:32px;color:#F3EFE9;text-shadow:0 0 8px #35D4E0, 0 0 22px rgba(53,212,224,.5)">Numérisation VHS</h2>
             <p class="m-0 text-sm" style="color:#B9ACA6;line-height:1.6">Vos souvenirs méritent de traverser le temps. Une offre pensée pour les particuliers, avec un registre visuel vintage dédié.</p>
             <a href="numerisation-vhs.html" class="self-start" style="margin-top:4px;padding:12px 26px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#c53661,#F2A93B)">Découvrir l'offre →</a>
         </div>
-        <div style="width:220px;height:140px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0;background:#0A0A0B">
-            <img src="IMAGE/cassette-vhs.png" alt="Cassette VHS" style="width:100%;height:100%;object-fit:contain;padding:14px;box-sizing:border-box">
+        <div style="width:190px;height:190px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0;background:#000;display:flex;align-items:center;justify-content:center">
+            <img src="IMAGE/vhs-club-logo.png" alt="VHS Club" style="width:100%;height:100%;object-fit:contain;display:block">
         </div>
     </div>
 </section>
