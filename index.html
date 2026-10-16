@@ -310,11 +310,11 @@
 
             <!-- Menu de navigation ordinateur -->
             <nav id="main-navigation" class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase transition-all duration-500">
-                <a href="#projets" class="text-white hover:text-brand-terracotta transition">Créations</a>
+                <a href="#a-propos" class="text-white hover:text-brand-terracotta transition">À Propos</a>
+                <a href="#approche" class="text-white hover:text-brand-terracotta transition">Mon Approche</a>
                 <a href="#offres" class="text-white hover:text-brand-terracotta transition">Prestations</a>
                 <a href="numerisation-vhs.html" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;font-weight:400;color:#35D4E0;text-shadow:0 0 8px rgba(53,212,224,.6)">Numérisation <span style="color:#ff6ec7;text-shadow:0 0 8px rgba(255,110,199,.6)">VHS</span></a>
-                <a href="#approche" class="text-white hover:text-brand-terracotta transition">Mon Approche</a>
-                <a href="#a-propos" class="text-white hover:text-brand-terracotta transition">À Propos</a>
+                <a href="#projets" class="text-white hover:text-brand-terracotta transition">Créations</a>
                 <a href="#contact" class="bg-brand-dark text-brand-light px-5 py-2.5 rounded-full hover:bg-brand-terracotta transition shadow-sm">Me Contacter</a>
             </nav>
 
@@ -327,11 +327,11 @@
         <!-- Menu de navigation mobile -->
         <div id="mobile-menu" class="hidden md:hidden bg-black border-b border-brand-dark/10 px-6 py-6 absolute w-full left-0 z-40 transition-all">
             <nav class="flex flex-col gap-4 text-xs font-bold tracking-widest uppercase">
-                <a href="#projets" onclick="toggleMobileMenu()" class="text-white py-2">Créations</a>
+                <a href="#a-propos" onclick="toggleMobileMenu()" class="text-white py-2">À Propos</a>
+                <a href="#approche" onclick="toggleMobileMenu()" class="text-white py-2">Mon Approche</a>
                 <a href="#offres" onclick="toggleMobileMenu()" class="text-white py-2">Prestations</a>
                 <a href="numerisation-vhs.html" onclick="toggleMobileMenu()" class="py-2" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;color:#35D4E0">Numérisation <span style="color:#ff6ec7">VHS</span></a>
-                <a href="#approche" onclick="toggleMobileMenu()" class="text-white py-2">Mon Approche</a>
-                <a href="#a-propos" onclick="toggleMobileMenu()" class="text-white py-2">À Propos</a>
+                <a href="#projets" onclick="toggleMobileMenu()" class="text-white py-2">Créations</a>
                 <a href="#contact" onclick="toggleMobileMenu()" class="bg-brand-dark text-brand-light px-5 py-3 rounded-full text-center hover:bg-brand-terracotta transition mt-2">Me Contacter</a>
             </nav>
         </div>
@@ -420,143 +420,86 @@
 
 </div>
 
-   <!-- ==========================================
-       DERNIERS PROJETS (VITRINE VIDÉO & LINK PORTFOLIO)
-       ========================================== -->
-<section id="projets" class="w-full block clear-both bg-black text-white" style="font-family: 'Montserrat', sans-serif;">
+<!-- ==========================================
+   SECTION QUI JE SUIS / À PROPOS
+   ========================================== -->
+<section id="a-propos" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
 
-    <!-- BANNIÈRE VIDÉO IMMERSIVE -->
-    <div class="relative w-full min-h-screen flex items-center overflow-hidden">
+    <!-- Éclairage d'ambiance en arrière-plan -->
+    <div class="absolute top-1/2 right-10 -translate-y-1/2 w-[500px] h-[500px] bg-brand-terracotta/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
         
-        <!-- Vidéo Jet Ski en arrière-plan -->
-        <div class="absolute inset-0 z-0 overflow-hidden">
-            <video 
-                autoplay 
-                loop 
-                muted 
-                playsinline 
-                poster="MINIATURE/couv_rxp.jpg" 
-                class="w-full h-full object-cover opacity-85 scale-105">
-                <source src="https://res.cloudinary.com/cjaqyint/video/upload/v1791973983/RXP_MASTER_WEB.mp4" type="video/mp4">
-            </video>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            <!-- Bandeau de fondu supérieur (Noir vers Transparent) -->
-            <div class="absolute top-0 inset-x-0 h-40 md:h-64 bg-gradient-to-b from-black via-black/70 to-transparent z-10 pointer-events-none"></div>
-
-            <!-- Gradient sombre latéral (pour faire ressortir le titre et le bouton) -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
-        </div>
-
-        <!-- Contenu aligné à gauche et centré verticalement -->
-        <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
-            <div class="max-w-xl space-y-8">
-                <div>
-                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block mb-4" style="font-family: 'Cinzel', serif;">
-                        Portfolio & Réalisations
-                    </span>
-                    <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl leading-none">
-                        Les dernières créations
-                    </h2>
-                </div>
-
-                <!-- BOUTON / LIEN : VOIR LE PORTFOLIO -->
-                <div>
-                    <a href="portfolio.html" class="inline-flex items-center gap-4 group bg-black/40 backdrop-blur-md border border-white/20 hover:border-brand-terracotta px-8 py-4 transition-all duration-500 shadow-2xl hover:bg-brand-terracotta/10">
-                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:text-brand-terracotta transition-colors duration-300" style="font-family: 'Cinzel', serif;">
-                            Voir le portfolio
-                        </span>
-                        <svg class="w-4 h-4 text-brand-terracotta transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </a>
+            <!-- COLONNE GAUCHE : VISUEL / PHOTO -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative mx-auto max-w-md lg:max-w-none">
+                    <!-- Cadre décoratif Terracotta -->
+                    <div class="absolute -inset-2 border border-brand-terracotta/30 rounded-2xl transform -rotate-1 pointer-events-none"></div>
+                    
+                    <!-- Image de présentation -->
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 aspect-[4/5] shadow-2xl">
+                        <img src="IMAGE/9.JPG" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80';" alt="Charly - Vidéaste" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    </div>
                 </div>
             </div>
+
+            <!-- COLONNE DROITE : NARRATION & VALEURS -->
+            <div class="lg:col-span-7 space-y-6 text-left">
+                
+                <!-- En-tête -->
+                <div class="space-y-3">
+                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
+                        Derrière l'objectif
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight">
+                        Charly Munier
+                    </h2>
+                    <p class="text-sm font-semibold text-neutral-400 tracking-wider uppercase">
+                        Vidéaste — CH Production
+                    </p>
+                    <div class="w-12 h-[1px] bg-brand-terracotta/60 my-4"></div>
+                </div>
+
+                <!-- Bio / Storytelling -->
+                <div class="space-y-4 text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
+                    <p>
+                        Parce que les émotions ne s'inventent pas, je mets un point d'honneur à transformer chaque idée simple en image forte, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
+                    </p>
+                    <p>
+                        Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
+                    </p>
+                </div>
+
+                <!-- Points forts / Philosophie -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-900">
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
+                            Vision
+                        </h4>
+                        <p class="text-xs text-neutral-400 font-light">
+                            L'authenticité de votre terrain, la force du cinéma.
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
+                            Exigence
+                        </h4>
+                        <p class="text-xs text-neutral-400 font-light">
+                            Captation 4K, travail de la lumière et sound design immersif.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    </div>
 
-</section>
-
-
-<!-- ==========================================
-       SECTION NOS OFFRES (grille par type de projet)
-       ========================================== -->
-<section id="offres" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900" style="font-family: 'Montserrat', sans-serif;">
-    <div class="max-w-7xl mx-auto px-6 mb-14">
-        <div class="text-center flex flex-col items-center gap-3">
-            <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">Prestations</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold">Une offre dédiée à chaque projet</h2>
-            <p class="text-neutral-400 text-sm max-w-xl mx-auto">Déroulé détaillé et tarifs indicatifs pour chaque type de projet.</p>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-900">
-                <a href="corporate.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/btob.jpg" alt="Corporate" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Corporate</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Entreprises &amp; marques</span>
-                    </div>
-                </a>
-                <a href="souvenirs-portraits.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/souvenirs-portraits.jpg" alt="Souvenirs &amp; portraits" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Souvenirs &amp; portraits</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Grand public &amp; particuliers</span>
-                    </div>
-                </a>
-                <a href="evenementiel.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/event.jpg" alt="Event" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Event</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Conférences &amp; lancements</span>
-                    </div>
-                </a>
-                <a href="mariage.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/mariage.jpg" alt="Mariage" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Mariage</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Cérémonie &amp; réception</span>
-                    </div>
-                </a>
-                <a href="tourisme.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/tourisme.jpg" alt="Tourisme" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Tourisme</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Hôtels &amp; destinations</span>
-                    </div>
-                </a>
-                <a href="reseaux-sociaux.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
-                    <img src="IMAGE/type%20video/web/reseaux-sociaux.jpg" alt="Réseaux sociaux" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-black/50"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
-                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Réseaux sociaux</h3>
-                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">En partenariat avec AMG COM</span>
-                    </div>
-                </a>
     </div>
 </section>
-
-<!-- ==========================================
-       TEASER NUMÉRISATION VHS
-       ========================================== -->
-<section class="w-full block clear-both bg-black" style="padding:72px 24px;border-top:1px solid rgba(243,239,233,0.08);border-bottom:1px solid rgba(243,239,233,0.08)">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-10" style="padding:40px;border-radius:12px;background:#000">
-        <div class="flex flex-col gap-3.5" style="max-width:460px">
-            <span class="inline-block" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff6ec7;border:1px solid #ff6ec7;border-radius:999px;padding:4px 10px">VHS CLUB</span>
-            <h2 class="m-0" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;font-size:32px;color:#F3EFE9;text-shadow:0 0 8px #35D4E0, 0 0 22px rgba(53,212,224,.5)">Numérisation VHS</h2>
-            <p class="m-0 text-sm" style="color:#B9ACA6;line-height:1.6">Vos souvenirs méritent de traverser le temps. Une offre pensée pour les particuliers, avec un registre visuel vintage dédié.</p>
-            <a href="numerisation-vhs.html" class="self-start" style="margin-top:4px;padding:12px 26px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#c53661,#F2A93B)">Découvrir l'offre →</a>
-        </div>
-        <div style="width:190px;height:190px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0;background:#000;display:flex;align-items:center;justify-content:center">
-            <img src="IMAGE/vhs-club-logo.png" alt="VHS Club" style="width:100%;height:100%;object-fit:contain;display:block">
-        </div>
-    </div>
-</section>
-
 
 <!-- ==========================================
        SECTION MON APPROCHE & SUR-MESURE
@@ -744,84 +687,139 @@
 </section>
 
 <!-- ==========================================
-   SECTION QUI JE SUIS / À PROPOS
-   ========================================== -->
-<section id="a-propos" class="w-full block clear-both relative z-20 py-28 md:py-36 bg-black text-white border-t border-neutral-900 overflow-hidden" style="font-family: 'Montserrat', sans-serif;">
+       SECTION NOS OFFRES (grille par type de projet)
+       ========================================== -->
+<section id="offres" class="w-full block clear-both relative z-20 py-24 md:py-32 bg-black text-white border-t border-neutral-900" style="font-family: 'Montserrat', sans-serif;">
+    <div class="max-w-7xl mx-auto px-6 mb-14">
+        <div class="text-center flex flex-col items-center gap-3">
+            <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">Prestations</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold">Une offre dédiée à chaque projet</h2>
+            <p class="text-neutral-400 text-sm max-w-xl mx-auto">Déroulé détaillé et tarifs indicatifs pour chaque type de projet.</p>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-900">
+                <a href="corporate.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/btob.jpg" alt="Corporate" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Corporate</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Entreprises &amp; marques</span>
+                    </div>
+                </a>
+                <a href="souvenirs-portraits.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/souvenirs-portraits.jpg" alt="Souvenirs &amp; portraits" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Souvenirs &amp; portraits</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Grand public &amp; particuliers</span>
+                    </div>
+                </a>
+                <a href="evenementiel.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/event.jpg" alt="Event" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Event</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Conférences &amp; lancements</span>
+                    </div>
+                </a>
+                <a href="mariage.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/mariage.jpg" alt="Mariage" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Mariage</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Cérémonie &amp; réception</span>
+                    </div>
+                </a>
+                <a href="tourisme.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/tourisme.jpg" alt="Tourisme" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Tourisme</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">Hôtels &amp; destinations</span>
+                    </div>
+                </a>
+                <a href="reseaux-sociaux.html" class="group relative block overflow-hidden bg-black" style="aspect-ratio:4/3">
+                    <img src="IMAGE/type%20video/web/reseaux-sociaux.jpg" alt="Réseaux sociaux" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 px-6">
+                        <h3 class="text-xl font-extrabold text-white uppercase tracking-wide group-hover:text-brand-terracotta transition-colors">Réseaux sociaux</h3>
+                        <span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-300">En partenariat avec AMG COM</span>
+                    </div>
+                </a>
+    </div>
+</section>
 
-    <!-- Éclairage d'ambiance en arrière-plan -->
-    <div class="absolute top-1/2 right-10 -translate-y-1/2 w-[500px] h-[500px] bg-brand-terracotta/5 rounded-full blur-3xl pointer-events-none"></div>
+<!-- ==========================================
+       TEASER NUMÉRISATION VHS
+       ========================================== -->
+<section class="w-full block clear-both bg-black" style="padding:72px 24px;border-top:1px solid rgba(243,239,233,0.08);border-bottom:1px solid rgba(243,239,233,0.08)">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-10" style="padding:40px;border-radius:12px;background:#000">
+        <div class="flex flex-col gap-3.5" style="max-width:460px">
+            <span class="inline-block" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff6ec7;border:1px solid #ff6ec7;border-radius:999px;padding:4px 10px">VHS CLUB</span>
+            <h2 class="m-0" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;font-size:32px;color:#F3EFE9;text-shadow:0 0 8px #35D4E0, 0 0 22px rgba(53,212,224,.5)">Numérisation VHS</h2>
+            <p class="m-0 text-sm" style="color:#B9ACA6;line-height:1.6">Vos souvenirs méritent de traverser le temps. Une offre pensée pour les particuliers, avec un registre visuel vintage dédié.</p>
+            <a href="numerisation-vhs.html" class="self-start" style="margin-top:4px;padding:12px 26px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#c53661,#F2A93B)">Découvrir l'offre →</a>
+        </div>
+        <div style="width:190px;height:190px;border-radius:8px;overflow:hidden;position:relative;flex-shrink:0;background:#000;display:flex;align-items:center;justify-content:center">
+            <img src="IMAGE/vhs-club-logo.png" alt="VHS Club" style="width:100%;height:100%;object-fit:contain;display:block">
+        </div>
+    </div>
+</section>
 
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
+   <!-- ==========================================
+       DERNIERS PROJETS (VITRINE VIDÉO & LINK PORTFOLIO)
+       ========================================== -->
+<section id="projets" class="w-full block clear-both bg-black text-white" style="font-family: 'Montserrat', sans-serif;">
+
+    <!-- BANNIÈRE VIDÉO IMMERSIVE -->
+    <div class="relative w-full min-h-screen flex items-center overflow-hidden">
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Vidéo Jet Ski en arrière-plan -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <video 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                poster="MINIATURE/couv_rxp.jpg" 
+                class="w-full h-full object-cover opacity-85 scale-105">
+                <source src="https://res.cloudinary.com/cjaqyint/video/upload/v1791973983/RXP_MASTER_WEB.mp4" type="video/mp4">
+            </video>
             
-            <!-- COLONNE GAUCHE : VISUEL / PHOTO -->
-            <div class="lg:col-span-5 relative">
-                <div class="relative mx-auto max-w-md lg:max-w-none">
-                    <!-- Cadre décoratif Terracotta -->
-                    <div class="absolute -inset-2 border border-brand-terracotta/30 rounded-2xl transform -rotate-1 pointer-events-none"></div>
-                    
-                    <!-- Image de présentation -->
-                    <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 aspect-[4/5] shadow-2xl">
-                        <img src="IMAGE/9.JPG" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80';" alt="Charly - Vidéaste" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    </div>
-                </div>
-            </div>
+            <!-- Bandeau de fondu supérieur (Noir vers Transparent) -->
+            <div class="absolute top-0 inset-x-0 h-40 md:h-64 bg-gradient-to-b from-black via-black/70 to-transparent z-10 pointer-events-none"></div>
 
-            <!-- COLONNE DROITE : NARRATION & VALEURS -->
-            <div class="lg:col-span-7 space-y-6 text-left">
-                
-                <!-- En-tête -->
-                <div class="space-y-3">
-                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block" style="font-family: 'Cinzel', serif;">
-                        Derrière l'objectif
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight">
-                        Charly Munier
-                    </h2>
-                    <p class="text-sm font-semibold text-neutral-400 tracking-wider uppercase">
-                        Vidéaste — CH Production
-                    </p>
-                    <div class="w-12 h-[1px] bg-brand-terracotta/60 my-4"></div>
-                </div>
-
-                <!-- Bio / Storytelling -->
-                <div class="space-y-4 text-xs md:text-sm text-neutral-300 font-light leading-relaxed">
-                    <p>
-                        Parce que les émotions ne s'inventent pas, je mets un point d'honneur à transformer chaque idée simple en image forte, avec une mise en scène soignée. J'aide les marques, les entreprises et les acteurs du tourisme à raconter leur histoire à travers des vidéos sur mesure.
-                    </p>
-                    <p>
-                        Du premier repérage au calage de la lumière, je façonne chaque projet avec soin pour vous offrir un rendu cinématographique unique. Un film qui valorise vos savoir-faire et laisse une empreinte durable.
-                    </p>
-                </div>
-
-                <!-- Points forts / Philosophie -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-900">
-                    <div class="space-y-1">
-                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
-                            Vision
-                        </h4>
-                        <p class="text-xs text-neutral-400 font-light">
-                            L'authenticité de votre terrain, la force du cinéma.
-                        </p>
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="text-xs font-bold text-white uppercase tracking-wider" style="font-family: 'Cinzel', serif;">
-                            Exigence
-                        </h4>
-                        <p class="text-xs text-neutral-400 font-light">
-                            Captation 4K, travail de la lumière et sound design immersif.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
+            <!-- Gradient sombre latéral (pour faire ressortir le titre et le bouton) -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
         </div>
 
+        <!-- Contenu aligné à gauche et centré verticalement -->
+        <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
+            <div class="max-w-xl space-y-8">
+                <div>
+                    <span class="text-xs font-bold tracking-[0.3em] text-brand-terracotta uppercase block mb-4" style="font-family: 'Cinzel', serif;">
+                        Portfolio & Réalisations
+                    </span>
+                    <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl leading-none">
+                        Les dernières créations
+                    </h2>
+                </div>
+
+                <!-- BOUTON / LIEN : VOIR LE PORTFOLIO -->
+                <div>
+                    <a href="portfolio.html" class="inline-flex items-center gap-4 group bg-black/40 backdrop-blur-md border border-white/20 hover:border-brand-terracotta px-8 py-4 transition-all duration-500 shadow-2xl hover:bg-brand-terracotta/10">
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:text-brand-terracotta transition-colors duration-300" style="font-family: 'Cinzel', serif;">
+                            Voir le portfolio
+                        </span>
+                        <svg class="w-4 h-4 text-brand-terracotta transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 
 <!-- ==========================================
@@ -961,11 +959,11 @@
                     Navigation
                 </span>
                 <ul class="space-y-2.5 text-xs text-brand-muted font-semibold">
-                    <li><a href="#projets" class="hover:text-brand-terracotta transition-colors">Créations</a></li>
+                    <li><a href="#a-propos" class="hover:text-brand-terracotta transition-colors">À propos</a></li>
+                    <li><a href="#approche" class="hover:text-brand-terracotta transition-colors">Mon approche</a></li>
                     <li><a href="#offres" class="hover:text-brand-terracotta transition-colors">Prestations</a></li>
                     <li><a href="numerisation-vhs.html" class="hover:text-brand-terracotta transition-colors">Numérisation VHS</a></li>
-                    <li><a href="#approche" class="hover:text-brand-terracotta transition-colors">Mon approche</a></li>
-                    <li><a href="#a-propos" class="hover:text-brand-terracotta transition-colors">À propos</a></li>
+                    <li><a href="#projets" class="hover:text-brand-terracotta transition-colors">Créations</a></li>
                 </ul>
             </div>
 
